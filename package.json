@@ -10,6 +10,7 @@
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "cra-template": "1.2.0",
+    "daisyui": "^4.12.10",
     "date-fns": "^3.6.0",
     "formik": "^2.4.6",
     "mdb-react-ui-kit": "^8.0.0",

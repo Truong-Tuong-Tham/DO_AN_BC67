@@ -1,5 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import HeaderDetail from "../DetailJob/Component/Header";
@@ -12,8 +12,21 @@ import Conected from "./component/Conected";
 import ProfileX from "./component/ProFileXUser";
 
 const ProFilePage = () => {
+  const navigate = useNavigate();
   const { infoUser } = useSelector((state) => state.userReducer);
   const { iduser } = useParams();
+
+  useEffect(() => {
+    // Redirect to home page if infoUser does not exist
+    if (!infoUser || !infoUser.user) {
+      navigate("/");
+    }
+  }, [infoUser, navigate]);
+
+  if (!infoUser || !infoUser.user) {
+    // Render nothing while redirecting
+    return null;
+  }
 
   return (
     <div>
@@ -21,9 +34,9 @@ const ProFilePage = () => {
         <HeaderDetail />
         <ListTypeJobsDetail />
       </div>
-      
+
       <div className="flex w-[95%] mx-auto p-4 border-r border-gray-200">
-        {infoUser.user.id === iduser ? (
+        {infoUser.user.id == iduser ? (
           <>
             {/* ProfileDetail takes up half the width and sticks to the top */}
             <div className="w-2/5 pr-4 sticky h-full top-0">

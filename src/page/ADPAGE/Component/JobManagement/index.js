@@ -240,18 +240,20 @@ const JobManagement = () => {
             {currentJobs.map((job) => (
               <tr
                 key={job.id}
-                className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-300"
+                className="border-b border-gray-200  hover:bg-gray-100 transition-colors duration-300"
               >
-                <td className="p-4 flex items-center">
+                <td className=" flex items-center justify-center">
                   <img
                     src={job.hinhAnh}
                     alt={job.tenCongViec}
-                    className="w-16 h-16 object-cover rounded-lg shadow-sm"
+                    className="w-16 h-16 mt-6 object-cover rounded-lg shadow-sm"
                   />
                 </td>
                 <td className="p-4 text-gray-800">{job.tenCongViec}</td>
-                <td className="p-4 text-gray-800">${job.giaTien.toFixed(2)}</td>
-                <td className="p-4   flex justify-center items-center space-x-2">
+                <td className="px-4 pt-6 text-gray-800">
+                  ${job.giaTien.toFixed(2)}
+                </td>
+                <td className=" pb-4   flex  items-center space-x-2">
                   <Button
                     type="link"
                     onClick={() => handleViewClick(job.id)}

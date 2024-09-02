@@ -221,6 +221,7 @@ const ProfileX = () => {
                 />
               </div>
             </Card>
+            
           </div>
 
           <div className="w-full flex flex-col 2xl:w-2/3">
@@ -245,6 +246,7 @@ const ProfileX = () => {
               title={<h3 className="text-xl font-semibold text-gray-800">{item.title}</h3>}
               description={
                 <p className="text-gray-600 text-sm mt-1">{item.description}</p>
+                
               }
             />
           </List.Item>
@@ -254,6 +256,7 @@ const ProfileX = () => {
       <p className="text-gray-500">No projects available in the portfolio.</p>
     )}
   </Card>
+
 </div>
 
         </div>

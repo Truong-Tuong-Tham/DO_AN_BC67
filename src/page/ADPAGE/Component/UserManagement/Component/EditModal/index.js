@@ -55,10 +55,14 @@ const UserEditModal = ({ visible, onCancel, user, onUpdate }) => {
 
       if (onUpdate) onUpdate(user.content.id, values);
       // Update Redux store
+     
+     if (infoUser.user.id === user.content.id) {
       dispatch(putInfoUserAction({
         ...infoUser,
         user: { ...infoUser.user, ...values }
-      }));
+      })); 
+     }
+    
       onCancel();
     } catch (error) {
       console.error("Error updating user:", error);

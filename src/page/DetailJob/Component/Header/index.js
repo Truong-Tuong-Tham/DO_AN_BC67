@@ -6,15 +6,13 @@ import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { postLogOutAction } from "../../../../redux/user/userSlice";
 import "../../../../page/Component/HeaderPage/Header.css";
 
-
-
 const HeaderDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { idjob } = useParams();
   const { listTypeJobsDetail } = useSelector((state) => state.jobReducer);
   const { infoUser } = useSelector((state) => state.userReducer);
-console.log("infoUserHD",infoUser)
+  console.log("infoUserHD", infoUser);
   const [inputValue, setInputValue] = useState("");
 
   const idjobNumber = Number(idjob);
@@ -58,27 +56,26 @@ console.log("infoUserHD",infoUser)
           Profile
         </NavLink>
       </Menu.Item>
-      
+
       {infoUser?.user?.role === "ADMIN" && (
         <Menu.Item>
           <NavLink
-            to=  {`/admin/${infoUser?.user?.id}`}
+            to={`/admin/${infoUser?.user?.id}`}
             className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
           >
             Admin Page
           </NavLink>
         </Menu.Item>
       )}
-  
+
       <Menu.Item key="2" onClick={() => dispatch(postLogOutAction())}>
         <div className="flex items-center space-x-2">
-         
           <span>Log Out</span>
         </div>
       </Menu.Item>
     </Menu>
   );
-  
+
   const fiverrProMenu = (
     <Menu className="p-4 bg-white shadow-lg rounded-lg">
       <Menu.Item>
@@ -198,13 +195,18 @@ console.log("infoUserHD",infoUser)
   return (
     <div className="h-full w-full p-5">
       <div className="flex justify-between items-center">
-        <div className="flex-1 max-w-[350px] relative">
-          <div className="flex">
+        <div class="font-extrabold tracking-widest  text-xl">
+          <a onClick={() => navigate("/")} class="transition duration-500 cursor-pointer  text-3xl hover:text-green-800">
+            FIVERR
+          </a>
+        </div>
+        <div className="flex-1 max-w-[350px] me-[600px] relative">
+          <div className="flex h-[30px]">
             <div className="flex w-10 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white p-5">
               <svg
                 viewBox="0 0 20 20"
                 aria-hidden="true"
-                className="pointer-events-none absolute w-8 fill-gray-500 transition"
+                className="pointer-events-none absolute w-8 fill-gray-500  h-5 mb-2 transition"
               >
                 <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z"></path>
               </svg>

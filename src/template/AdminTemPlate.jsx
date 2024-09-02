@@ -1,84 +1,139 @@
-import { Header } from "antd/es/layout/layout";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
-import HeaderDetail from "../page/DetailJob/Component/Header";
 
 const AdminTemPlate = () => {
   const { infoUser } = useSelector((state) => state.userReducer);
-  const {iduser}=useParams();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
-  console.log("iduser",iduser);
+ const {iduser}=useParams();
+ console.log("iduser",iduser);
   useEffect(() => {
-    // userInfo (redux) có dữ liệu => true => đã đăng nhập
-    if (infoUser===null)  {
-      console.log('userInfo: ', infoUser );
-
+    if (infoUser === null) {
       navigate('/');
     }
-  }, []);
+    if(infoUser?.user?.role!=='ADMIN'){
+      navigate('/');
+    }
+    if(infoUser?.user?.id!=iduser){
+      navigate('/');
+    }
+  }, [infoUser, navigate]);
+
   return (
     <div className="flex min-h-screen">
-      {/* Dashboard Sidebar */}
-     
-       <div className="w-1/5 bg-gray-800 text-white p-4">
-      
- <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
-        <ul className="space-y-4">
-          <li>
+      {/* Toggle Button for Mobile View */}
+      <button
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        className="p-2 border-2 bg-white rounded-md border-gray-200 shadow-lg text-gray-500 focus:bg-teal-500 focus:outline-none focus:text-white absolute top-0 left-0 sm:hidden"
+      >
+        <svg
+          className="w-5 h-5 fill-current"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clipRule="evenodd"
+          ></path>
+        </svg>
+      </button>
+
+      {/* Sidebar */}
+      <div
+        className={`bg-white h-screen shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? "transform translate-x-0" : "transform -translate-x-full"
+        }`}
+      >
+        <div className="space-y-6 md:space-y-10 mt-10">
+          <h1 className="font-bold text-4xl text-center md:hidden">
+            D<span className="text-teal-600">.</span>
+          </h1>
+          <h1 className="hidden md:block font-bold text-sm md:text-xl text-center">
+           Hello admin<span className="text-teal-600">.</span>
+          </h1>
+          <div id="profile" className="space-y-3 text-center">
+            <img
+              src={infoUser?.user.avatar}
+              alt="Avatar user"
+              className="w-10 md:w-16 rounded-full mx-auto"
+            />
+            <div>
+              <h2 className="font-medium text-xs md:text-sm text-teal-500">
+                {infoUser?.user.name}
+              </h2>
+              <p className="text-xs text-gray-500">Administrator</p>
+            </div>
+          </div>
+          <div id="menu" className="flex flex-col space-y-2">
             <NavLink
               to="UserManagement"
               className={({ isActive }) =>
                 isActive
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-yellow-300"
+                  ? "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
+                  : "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
               }
             >
+              <svg
+                className="w-6 h-6 fill-current mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" />
+              </svg>
               Quản lý người dùng
             </NavLink>
-          </li>
-          <li>
             <NavLink
               to="JobManagement"
               className={({ isActive }) =>
                 isActive
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-yellow-300"
+                  ? "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
+                  : "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
               }
             >
+              <svg
+                className="w-6 h-6 fill-current mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+              </svg>
               Quản lý công việc
             </NavLink>
-          </li>
-          <li>
             <NavLink
               to="JobTypeManagement"
               className={({ isActive }) =>
                 isActive
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-yellow-300"
+                  ? "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
+                  : "text-sm font-medium text-gray-700 py-2 px-2 hover:bg-teal-500 hover:text-white rounded-md transition duration-150 ease-in-out flex items-center"
               }
             >
+              <svg
+                className="w-6 h-6 fill-current mr-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                <path
+                  fillRule="evenodd"
+                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3z"
+                  clipRule="evenodd"
+                />
+              </svg>
               Quản lý loại công việc
             </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="ServiceManagement"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-yellow-400 font-semibold"
-                  : "text-white hover:text-yellow-300"
-              }
-            >
-              Quản lý dịch vụ
-            </NavLink>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="w-4/5 bg-white p-8">
-        <Outlet  />
+      {/* Main Content */}
+      <div className="flex-1 p-8 bg-gray-100">
+        <Outlet />
       </div>
     </div>
   );

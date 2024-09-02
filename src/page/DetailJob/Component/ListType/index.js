@@ -40,9 +40,7 @@ const ListTypeJobsDetail = () => {
         <React.Fragment key={`group-${nhom.id}`}>
           <Menu.Item>
             <span
-              onClick={() =>
-                navigate(`/detail/jobs/${itemId}/listjobs/${nhom.id}`)
-              }
+             
               className="font-semibold text-gray-700 hover:text-gray-900"
             >
               {nhom.tenNhom}
@@ -54,7 +52,7 @@ const ListTypeJobsDetail = () => {
                 onClick={() =>
                   navigate(`/detail/jobs/${itemId}/listjobs/${chiTiet.id}`)
                 }
-                className="pl-4 font-light text-gray-600 hover:text-gray-800"
+                className="pl-4 font-light cursor-pointer text-gray-600 hover:text-gray-800"
               >
                 {chiTiet.tenChiTiet}
               </span>
@@ -81,7 +79,7 @@ const ListTypeJobsDetail = () => {
             <div className="text-center cursor-pointer">
               <div className="relative flex items-center">
                 <div className="flex-grow border-t border-gray-300" />
-                <span className="px-4 text-sm font-semibold text-gray-800">{item.tenLoaiCongViec}</span>
+                <span onClick={() => navigate(`/detail/jobs/${item.id}`)} className="px-4 text-sm font-semibold text-gray-800">{item.tenLoaiCongViec}</span>
                 <div className="flex-grow border-t border-gray-300" />
               </div>
             </div>

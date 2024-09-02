@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
@@ -11,28 +11,9 @@ import { NavLink } from "react-router-dom";
 const LoginPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  // Image carousel data
-  const images = [
-    "https://th.bing.com/th/id/OIG3.PrGJEKj1AlUsr4AqR8m0?w=1024&h=1024&rs=1&pid=ImgDetMain",
-    "https://th.bing.com/th/id/OIG2.idX4QS4APwLBnd9k4c3d?pid=ImgGn",
-    "https://th.bing.com/th/id/OIG2.v.aIQxZZbCRTcZ0dxFQS?pid=ImgGn",
-  ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
-
-    return () => clearInterval(intervalId);
-  }, [images.length]);
-
-  // Formik setup for login form
   const formik = useFormik({
     initialValues: {
-     
       email: "",
       password: "",
     },
@@ -46,91 +27,97 @@ const LoginPage = () => {
     onSubmit: (values) => {
       userService.postLogin(values)
         .then((res) => {
-          console.log(res);
           navigate("/");
           message.success("Đăng nhập thành công");
           dispatch(postLoginAction(res.data.content));
         })
         .catch((err) => {
           message.error("Đăng nhập thất bại");
-          console.error(err);
         });
     },
   });
 
   return (
-    <div className="h-screen w-screen flex font-body">
-      <div className="relative w-1/2 h-screen overflow-hidden">
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${
-              index === currentImageIndex ? "opacity-100" : "opacity-0"
-            }`}
-            style={{ backgroundImage: `url(${image})` }}
-          />
-        ))}
+    <div className="h-screen w-screen flex">
+      <div
+        className="relative w-1/2 h-screen bg-cover bg-center"
+        style={{ backgroundImage: 'url(https://images.pexels.com/photos/837267/pexels-photo-837267.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)' }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-green-500 to-green-400 opacity-75 z-0"></div>
+        <div className="flex items-center justify-center h-full relative z-10">
+          <div className="hidden lg:flex flex-col text-white p-10 max-w-lg">
+            <h1 className="mb-3 font-bold text-white text-5xl">Hi! Welcome Back  To Fiverr</h1>
+            <p className="pr-3">"Welcome back! Discover new job opportunities, connect with clients, and enhance your skills on Fiverr. Start exploring new projects today and continue advancing your career!"</p>
+          </div>
+        </div>
       </div>
-
-      {/* Right side with login form */}
       <div className="w-1/2 flex items-center justify-center bg-white">
-        <form
-          onSubmit={formik.handleSubmit}
-          className="w-full max-w-md p-8 bg-gray-100 rounded-lg shadow-md"
-        >
-          <h2 className="text-2xl font-bold mb-6">Đăng nhập</h2>
+        <div className="p-12 bg-white mx-auto rounded-2xl shadow-lg w-full max-w-sm">
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-gray-700 font-semibold mb-2"
+            <h3 className="font-semibold text-2xl text-green-800">Sign In</h3>
+            <p className="text-gray-500">Please sign in to your account.</p>
+          </div>
+          <form onSubmit={formik.handleSubmit} className="space-y-5">
+            <div className="space-y-2">
+              <label htmlFor="email" className="text-sm font-medium text-gray-700 tracking-wide">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400"
+                placeholder="mail@gmail.com"
+              />
+              {formik.touched.email && formik.errors.email && (
+                <div className="text-red-500 text-sm">{formik.errors.email}</div>
+              )}
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="password" className="text-sm font-medium text-gray-700 tracking-wide">Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                className="w-full text-base px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-green-400"
+                placeholder="Enter your password"
+              />
+              {formik.touched.password && formik.errors.password && (
+                <div className="text-red-500 text-sm">{formik.errors.password}</div>
+              )}
+            </div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <input
+                  id="remember_me"
+                  name="remember_me"
+                  type="checkbox"
+                  className="h-4 w-4 bg-blue-500 focus:ring-blue-400 border-gray-300 rounded"
+                />
+                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-800">Remember</label>
+              </div>
+              <div className="text-sm">
+                <NavLink to="#" className="text-green-400 hover:text-green-500">Forgot?</NavLink>
+              </div>
+            </div>
+            <button
+              type="submit"
+              className="w-full flex justify-center bg-green-400 hover:bg-green-500 text-gray-100 p-3 rounded-full tracking-wide font-semibold shadow-lg cursor-pointer transition ease-in duration-500"
             >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
-            {formik.touched.email && formik.errors.email && (
-              <div className="text-red-500 text-sm">{formik.errors.email}</div>
-            )}
+              Sign in
+            </button>
+          </form>
+          <div className="pt-5 text-center text-gray-400 text-xs">
+            <span>
+              Register  
+              <a onClick={() => navigate('/auth/register')} rel="noopener noreferrer" target="_blank" className="text-green-500 hover:text-green-600"> FIVERR</a>
+            </span>
           </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 font-semibold mb-2"
-            >
-              Mật khẩu
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.password}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
-            {formik.touched.password && formik.errors.password && (
-              <div className="text-red-500 text-sm">{formik.errors.password}</div>
-            )}
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-          >
-            Đăng nhập
-          </button>
-          <div className="mt-4 text-center">
-            <NavLink to="/auth/register" className="text-blue-500 hover:underline">
-              Chưa có tài khoản? Đăng ký
-            </NavLink>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

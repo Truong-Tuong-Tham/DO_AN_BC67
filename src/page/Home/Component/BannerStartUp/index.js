@@ -2,7 +2,7 @@ import React from "react";
 
 const BannerStartUp = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6">
+    <div className="flex min-h-screen items-center w-[90%] justify-center  mx-auto p-6">
       {/* Background color to highlight content */}
       <div className="relative flex w-[1100px] h-[400px] flex-row rounded-2xl bg-white shadow-lg overflow-hidden">
         {/* Adjusted width and height, and increased border radius */}
@@ -15,7 +15,7 @@ const BannerStartUp = () => {
           {/* Added zoom-in effect on hover */}
         </div>
         <div className="flex flex-col justify-center p-6 w-1/2 rounded-r-2xl">
-          <h6 className="mb-2 font-sans text-base font-semibold uppercase text-pink-600 tracking-wide">
+          <h6 className="mb-2 font-sans text-base font-semibold uppercase text-green-700 tracking-wide">
             Fiverr Startups
           </h6>
           <h4 className="mb-3 font-sans text-2xl font-bold text-gray-800">
@@ -29,7 +29,7 @@ const BannerStartUp = () => {
           </p>
           <a className="inline-block mt-auto" href="#">
             <button
-              className="flex items-center gap-2 rounded-full py-3 px-6 bg-pink-500 text-white text-sm font-bold uppercase transition duration-300 hover:bg-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300"
+              className="flex items-center gap-2 rounded-full py-3 px-6 bg-green-700 text-white text-sm font-bold uppercase transition duration-300 hover:bg-green-900 focus:outline-none focus:ring-4 focus:ring-pink-300"
               type="button"
             >
               Learn More

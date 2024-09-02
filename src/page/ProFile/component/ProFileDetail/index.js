@@ -7,7 +7,6 @@ import Inf from "./ComponentProFile/ProfileDetail";
 const PFDetail = ({ iduser }) => {
   const { infoUser } = useSelector((state) => state.userReducer);
   const navigate = useNavigate();
-  console.log("infoUser", infoUser);
 
   useEffect(() => {
     if (!infoUser) {
@@ -20,7 +19,7 @@ const PFDetail = ({ iduser }) => {
       <div className="flex flex-col w-full md:w-1/2">
         <CardInF idUser={iduser} />
       </div>
-      <div className="flex flex-col  w-full md:w-1/2">
+      <div className="flex flex-col w-full md:w-1/2">
         {infoUser ? (
           <Inf info={infoUser.user} />
         ) : (

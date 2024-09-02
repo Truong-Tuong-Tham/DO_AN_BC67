@@ -33,14 +33,12 @@ const UserManagement = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 6; // Number of users per page
-  const defaultAvatarMale =
-  "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611716.jpg?w=740&t=st=1725096040~exp=1725096640~hmac=1009c8f3917cc3a7ed9b438e32238fc9b20fb2917244be8bd7c1e79303fd88df";
-const defaultAvatarFemale =
-  "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611731.jpg?w=740&t=st=1725095976~exp=1725096576~hmac=693722cc51a56ac9b361515cbd6053de90fbe5f8c0c21f50653dd6bc67e3c001";
+
+  const defaultAvatarFemale =
+    "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611731.jpg?w=740&t=st=1725095976~exp=1725096576~hmac=693722cc51a56ac9b361515cbd6053de90fbe5f8c0c21f50653dd6bc67e3c001";
 
   const fetchUserData = async () => {
     try {
-    
       const res = await userService.getListUser();
       const users = res.data.content;
       setUserData(users);
@@ -98,7 +96,7 @@ const defaultAvatarFemale =
     try {
       const res = await userService.getUserID(userId);
       setSelectedUser(res.data);
-     
+
       setIsEditModalVisible(true);
     } catch (error) {
       console.error("Error getting user for editing:", error);
@@ -181,7 +179,7 @@ const defaultAvatarFemale =
       key: "avatar",
       render: (avatar) => (
         <img
-          src={avatar||defaultAvatarFemale}
+          src={avatar || defaultAvatarFemale}
           alt="Avatar"
           className="w-12 h-12 rounded-full object-cover"
         />
@@ -203,7 +201,7 @@ const defaultAvatarFemale =
       dataIndex: "role",
       key: "role",
       render: (role) => (
-        <Tag color={role === "admin" ? "blue" : "green"}>{role}</Tag>
+        <Tag color={role === "ADMIN" ? "blue" : "green"}>{role}</Tag>
       ),
     },
     {
@@ -211,10 +209,14 @@ const defaultAvatarFemale =
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link" onClick={() => handleViewDetails(record.id)}>
+          <Button
+            type="link"
+        
+            onClick={() => handleViewDetails(record.id)}
+          >
             View
           </Button>
-          <Button type="link" onClick={() => handleEditUser(record.id)}>
+          <Button type="link" className="text-yellow-500 hover:text-yellow-700" onClick={() => handleEditUser(record.id)}>
             Edit
           </Button>
           <Button type="link" danger onClick={() => handleDelete(record.id)}>
