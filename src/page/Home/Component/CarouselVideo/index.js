@@ -1,165 +1,126 @@
-import React, { useRef, useState } from "react";
-import "./CarouselVideo.css";
-import { Carousel as AntCarousel } from "antd";
-import { useSelector } from "react-redux";
-
-const contentStyle = {
-  margin: 0,
-  height: "160px",
-  color: "#fff",
-  lineHeight: "160px",
-  textAlign: "center",
-  background: "#364d79",
-};
+import React, { useState } from 'react';
+import 'tailwindcss/tailwind.css';
 
 const videoData = [
   {
     src: "https://fiverr-res.cloudinary.com/q_auto,f_auto,w_560,dpr_1.0/v1/attachments/generic_asset/asset/42a6fd208670a0361b38bd72b47b9317-1599519173396/testimonial-video-still-lavender.jpg",
-    videoSrc:
-      "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/rb8jtakrisiz0xtsffwi",
+    videoSrc: "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/rb8jtakrisiz0xtsffwi",
     title: "Brighid Gannon (DNP, PMHNP-BC), Co-Founder",
-    quote:
-      "We used Fiverr for SEO, our logo, website, copy, animated videos — literally everything. It was like working with a human right next to you versus being across the world. The level of service and professionalism we received exceeded our expectations. Fiverr's platform allowed us to connect with talented freelancers who understood our vision and executed it flawlessly. We couldn’t have achieved our goals without their support.",
+    quote: "We used Fiverr for SEO, our logo, website, copy, animated videos — literally everything. It was like working with a human right next to you versus being across the world. The level of service and professionalism we received exceeded our expectations. Fiverr's platform allowed us to connect with talented freelancers who understood our vision and executed it flawlessly. We couldn’t have achieved our goals without their support.",
   },
   {
     src: "https://fiverr-res.cloudinary.com/q_auto,f_auto,w_560,dpr_1.0/v1/attachments/generic_asset/asset/42a6fd208670a0361b38bd72b47b9317-1599519173399/testimonial-video-still-rooted.jpg",
-    videoSrc:
-      "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/yja2ld5fnolhsixj3xxw",
+    videoSrc: "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/yja2ld5fnolhsixj3xxw",
     title: "Sarah Michaels, Project Manager",
-    quote:
-      "It's extremely exciting that Fiverr has freelancers from all over the world — it broadens the talent pool. One of the best things about Fiverr is that while we're sleeping, someone's working. This global reach allows us to operate round-the-clock and stay ahead of the competition. The quality of work and the diversity of skills available are unparalleled, making it a go-to platform for all our project needs.",
+    quote: "It's extremely exciting that Fiverr has freelancers from all over the world — it broadens the talent pool. One of the best things about Fiverr is that while we're sleeping, someone's working. This global reach allows us to operate round-the-clock and stay ahead of the competition. The quality of work and the diversity of skills available are unparalleled, making it a go-to platform for all our project needs.",
   },
   {
     src: "https://fiverr-res.cloudinary.com/q_auto,f_auto,w_560,dpr_1.0/v1/attachments/generic_asset/asset/42a6fd208670a0361b38bd72b47b9317-1599519173395/testimonial-video-still-haerfest.jpg",
-    videoSrc:
-      "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/bsncmkwya3nectkensun",
+    videoSrc: "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/bsncmkwya3nectkensun",
     title: "Duke De Laet, Founder & CEO",
-    quote:
-      "Fiverr provided us with exceptional support and top-notch services to enhance our business growth. The ability to find specialized skills on demand was a game-changer for us. From creative design to technical expertise, the freelancers we worked with delivered high-quality results that significantly impacted our brand's success. The flexibility and efficiency of Fiverr’s platform have become integral to our operations.",
+    quote: "Fiverr provided us with exceptional support and top-notch services to enhance our business growth. The ability to find specialized skills on demand was a game-changer for us. From creative design to technical expertise, the freelancers we worked with delivered high-quality results that significantly impacted our brand's success. The flexibility and efficiency of Fiverr’s platform have become integral to our operations.",
   },
   {
     src: "https://fiverr-res.cloudinary.com/q_auto,f_auto,w_560,dpr_1.0/v1/attachments/generic_asset/asset/42a6fd208670a0361b38bd72b47b9317-1599519173414/testimonial-video-still-naadam.jpg",
-    videoSrc:
-      "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/plfa6gdjihpdvr10rchl",
+    videoSrc: "https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/plfa6gdjihpdvr10rchl",
     title: "Caitlin Tormey, Chief Commercial Officer",
-    quote:
-      "Fiverr has been instrumental in our growth. Their diverse talent pool has allowed us to scale quickly and efficiently, without compromising on quality. The platform has been a vital resource for our marketing campaigns, providing us with creative professionals who bring fresh ideas and innovative strategies. Thanks to Fiverr, we’ve been able to execute our projects with precision and achieve remarkable results.",
+    quote: "Fiverr has been instrumental in our growth. Their diverse talent pool has allowed us to scale quickly and efficiently, without compromising on quality. The platform has been a vital resource for our marketing campaigns, providing us with creative professionals who bring fresh ideas and innovative strategies. Thanks to Fiverr, we’ve been able to execute our projects with precision and achieve remarkable results.",
   },
 ];
 
-const CarouselVideo = () => {
-  const [currentVideo, setCurrentVideo] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const videoRef = useRef(null);
+const TestimonialCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
 
-
-  const handlePlayClick = (videoSrc) => {
-    setCurrentVideo(videoSrc);
-    setIsModalOpen(true);
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % videoData.length);
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-    if (videoRef.current) {
-      videoRef.current.pause();
-    }
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + videoData.length) % videoData.length);
   };
 
   return (
-    <div className="w-full mt-10 carousel-container">
-      <h1 class="text-3xl font-bold text-center text-gray-800 my-4">
-        What they're saying about Fiverr
-      </h1>
-
-      <AntCarousel>
-        {videoData.map((video, index) => (
-          <div key={index}>
-            <div className="relative w-full flex">
-              <div className="w-2/5 relative flex items-center justify-center">
+    <div className="relative font-inter antialiased">
+      <main className="relative min-h-screen flex flex-col justify-center bg-slate-50 overflow-hidden">
+        <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="flex flex-col md:flex-row items-stretch">
+            {/* Carousel Body */}
+            <div className="relative flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden w-full">
+              <div className="relative w-full md:w-2/5 flex items-center justify-center">
                 <img
-                  src={video.src}
-                  alt={`Hình ảnh teaser video ${index + 1}`}
-                  className={`w-full h-auto object-cover rounded-lg ${
-                    isModalOpen && currentVideo === video.videoSrc
-                      ? "opacity-50"
-                      : ""
-                  }`}
+                  src={videoData[currentIndex].src}
+                  alt={`Thumbnail ${currentIndex}`}
+                  className="w-full h-48 md:h-full object-cover rounded-lg cursor-pointer"
+                  onClick={() => setModalOpen(true)}
                 />
-                {!isModalOpen && (
+                <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                   <button
-                    onClick={() => handlePlayClick(video.videoSrc)}
-                    className="play-button"
+                    onClick={() => setModalOpen(true)}
+                    className="text-white text-3xl md:text-4xl bg-blue-500 p-4 rounded-full shadow-lg"
+                    aria-label="Play video"
                   >
-                    <img
-                      src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/desktop-play-button.bab1740.png"
-                      alt="Play Button"
-                    />
+                    <svg className="w-6 h-6 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7L8 5z" />
+                    </svg>
                   </button>
-                )}
+                </div>
               </div>
-
-              {/* Title and Content */}
-              <div className="w-3/5 flex items-center p-4">
-                <div className="text-content">
-                  <h5 className="text-xl text-gray-600 text-start font-semibold mb-2">
-                    {video.title}
-                    <span className="testimonial-logo ml-2">
-                      <img
-                        alt="Company logo"
-                        src="https://fiverr-res.cloudinary.com/npm-assets/@fiverr/logged_out_homepage_perseus/lavender-logo-x2.3fff9e7.png"
-                        loading="lazy"
-                        className="inline-block h-6"
-                      />
-                    </span>
-                  </h5>
-                  <blockquote className="title-content text-green-900">
-                    "{video.quote}"
-                  </blockquote>
+              <div className="flex flex-col justify-between p-6 md:w-3/5 h-full">
+                <div>
+                  <h2 className="text-2xl font-semibold mb-4">{videoData[currentIndex].title}</h2>
+                  <p className="text-gray-700">{videoData[currentIndex].quote}</p>
+                </div>
+                <div className="flex mt-4">
+                  <button onClick={prevSlide} className="bg-gray-300 p-2 rounded-full mr-2">Prev</button>
+                  <button onClick={nextSlide} className="bg-gray-300 p-2 rounded-full">Next</button>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </AntCarousel>
 
-      {/* Modal for Video */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-50">
-          <div className="relative w-full max-w-4xl p-4 bg-white rounded-lg">
-            <video
-              ref={videoRef}
-              className="w-full h-auto rounded-lg shadow-lg"
-              controls
-              autoPlay
-              src={currentVideo}
-              type="video/mp4"
-            >
-              Your browser does not support the video tag.
-            </video>
-            <button
-              onClick={handleModalClose}
-              className="absolute top-4 right-4 bg-white p-2 rounded-full"
-            >
-              <svg
-                className="w-8 h-8 text-black"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
+            {/* Modal Video */}
+            {modalOpen && (
+              <>
+                <div
+                  className="fixed inset-0 z-50 bg-black bg-opacity-50 transition-opacity"
+                  onClick={() => setModalOpen(false)}
+                  aria-hidden="true"
+                ></div>
+                <div
+                  className="fixed inset-0 z-50 flex items-center justify-center p-4"
+                  role="dialog"
+                  aria-modal="true"
+                >
+                  <div
+                    className="relative bg-black rounded-lg overflow-hidden"
+                    style={{ width: '80%', maxWidth: '960px', height: '80%', maxHeight: '540px' }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <button
+                      className="absolute top-2 right-2 text-white text-2xl"
+                      onClick={() => setModalOpen(false)}
+                      aria-label="Close modal"
+                    >
+                      &times;
+                    </button>
+                    <video
+                      className="w-full h-full object-cover"
+                      controls
+                      autoPlay
+                      onClick={() => setModalOpen(false)}
+                    >
+                      <source src={videoData[currentIndex].videoSrc} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
-      )}
+      </main>
     </div>
   );
 };
 
-export default CarouselVideo;
+export default TestimonialCarousel;

@@ -21,7 +21,7 @@ const BannerLogoMaker = () => {
           website, an engaging marketing campaign.
         </p>
 
-        <a 
+        <a
           href="https://www.fiverr.com/logo-maker?source=LOHP_banner"
           target="_blank"
           rel="noopener noreferrer"

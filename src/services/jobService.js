@@ -66,4 +66,13 @@ deteleHireJob: (id) => {
   let uri = `/api/thue-cong-viec/${id}`;
   return https.delete(uri);
 },
+getlistCMT: ()=>{
+  let uri = "/api/binh-luan";
+  return https.get(uri);
+},
+deleteCMT: (id) => {
+  let uri = `/api/binh-luan/${id}`;
+  return https.delete(uri);
+},
 };
+

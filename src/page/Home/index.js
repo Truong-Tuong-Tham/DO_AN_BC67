@@ -13,13 +13,12 @@ import Features from "./Component/Introduce";
 
 const HomePage = () => {
   return (
-    <div className="w-full" >
+    <div className="w-full mx-auto" >
       <Banner />
       <ListTypeJobs  />
       <Features/>
       <Video/>
       <BannerFiverrPro/>
-     
       <CarouselVideo/>
       <BannerStartUp/>
       <BannerLogoMaker/>

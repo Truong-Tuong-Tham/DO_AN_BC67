@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { jobService } from "../../../../services/jobService";
-import { Card, Col, Row, Typography, Pagination } from "antd";
+import { Card, Typography, Pagination, List } from "antd";
 import "antd/dist/reset.css"; // Ensure Ant Design styles are applied
-import { postMenujobsAction } from "../../../../redux/user/jobSlice";
-import { useDispatch } from "react-redux";
 
 const { Title, Text } = Typography;
 
@@ -12,7 +10,7 @@ const JobTypeManagement = () => {
   const { iduser } = useParams();
   const [detailTypes, setDetailTypes] = useState([]);
   const [jobCategories, setJobCategories] = useState([]);
-  const dispatch = useDispatch();
+
   // State for pagination
   const [currentDetailPage, setCurrentDetailPage] = useState(1);
   const detailPageSize = 6;
@@ -33,7 +31,6 @@ const JobTypeManagement = () => {
     const fetchJobCategories = async () => {
       try {
         const response = await jobService.getTypeJob();
-
         setJobCategories(response.data?.content || []);
       } catch (error) {
         console.error("Error fetching job categories:", error);
@@ -48,6 +45,7 @@ const JobTypeManagement = () => {
     (currentDetailPage - 1) * detailPageSize,
     currentDetailPage * detailPageSize
   );
+
   const currentJobCategories = jobCategories.slice(
     (currentCategoryPage - 1) * categoryPageSize,
     currentCategoryPage * categoryPageSize
@@ -63,74 +61,46 @@ const JobTypeManagement = () => {
 
   return (
     <div className="container mx-auto p-6">
-     
       <div className="mb-12">
         <Title level={2} className="text-blue-600 mb-6">
           Job Type Details
         </Title>
         <div className="flex flex-col min-h-screen">
-          <Row gutter={[24, 24]} align="stretch" style={{ flex: 1 }}>
-            {currentDetailTypes.length > 0 ? (
-              currentDetailTypes.map((type) => (
-                <Col xs={24} sm={12} md={8} lg={6} key={type.id}>
-                  <Card
-                    hoverable
-                    cover={
-                      <img
-                        alt={type.tenNhom}
-                        src={type.hinhAnh}
-                        className="h-36 w-full object-cover rounded-t-lg"
-                      />
-                    }
-                    className="shadow-lg rounded-lg flex flex-col h-full"
-                    style={{ minHeight: "300px" }} // Ensure consistent height
-                  >
-                    <Title level={4} className="text-center mt-2 flex-grow">
-                      {type.tenNhom}
-                    </Title>
-                    <Text className="text-center block mb-2">
-                      <strong>Details:</strong>
-                    </Text>
-                    {type.dsChiTietLoai.map((detail) => (
-                      <Text key={detail.id} className="block text-center">
-                        - {detail.tenChiTiet}
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              current: currentDetailPage,
+              pageSize: detailPageSize,
+              total: detailTypes.length,
+              onChange: handleDetailPageChange,
+            }}
+            dataSource={currentDetailTypes}
+            renderItem={(type) => (
+              <List.Item>
+                <Card className="shadow-lg rounded-lg flex flex-col">
+                  <div className="flex items-center">
+                    <div
+                      className="h-24 w-24 bg-cover bg-center rounded-lg"
+                      style={{ backgroundImage: `url(${type.hinhAnh})` }}
+                    ></div>
+                    <div className="ml-4">
+                      <Title level={4} className="text-blue-600">
+                        {type.tenNhom}
+                      </Title>
+                      <Text className="text-gray-600">
+                        <strong>Details:</strong>
                       </Text>
-                    ))}
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <Col
-                span={24}
-                className="flex items-center justify-center"
-                style={{ minHeight: "300px" }}
-              >
-                <Text>No job types found.</Text>
-              </Col>
+                      {type.dsChiTietLoai.map((detail) => (
+                        <Text key={detail.id} className="block text-gray-600">
+                          - {detail.tenChiTiet}
+                        </Text>
+                      ))}
+                    </div>
+                  </div>
+                </Card>
+              </List.Item>
             )}
-            {/* Add empty Cols to maintain layout consistency */}
-            {currentDetailTypes.length % 6 !== 0 &&
-              Array.from({ length: 6 - (currentDetailTypes.length % 6) }).map(
-                (_, index) => (
-                  <Col
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    lg={6}
-                    key={`empty-${index}`}
-                    className="hidden md:block"
-                  >
-                    <div className="h-full" />
-                  </Col>
-                )
-              )}
-          </Row>
-          <Pagination
-            className="mt-6 flex justify-center"
-            current={currentDetailPage}
-            pageSize={detailPageSize}
-            total={detailTypes.length}
-            onChange={handleDetailPageChange}
           />
         </div>
       </div>
@@ -140,52 +110,25 @@ const JobTypeManagement = () => {
           Job Categories
         </Title>
         <div className="flex flex-col min-h-screen">
-          <Row gutter={[24, 24]} align="stretch" style={{ flex: 1 }}>
-            {currentJobCategories.length > 0 ? (
-              currentJobCategories.map((category) => (
-                <Col xs={24} sm={12} md={8} lg={6} key={category.id}>
-                  <Card
-                    className="shadow-lg rounded-lg flex flex-col h-full p-4"
-                    style={{ minHeight: "300px" }} // Ensure consistent height
-                  >
-                    <Title level={4} className="text-center flex-grow">
-                      {category.tenLoaiCongViec}
-                    </Title>
-                  </Card>
-                </Col>
-              ))
-            ) : (
-              <Col
-                span={24}
-                className="flex items-center justify-center"
-                style={{ minHeight: "300px" }}
-              >
-                <Text>No job categories found.</Text>
-              </Col>
+          <List
+            itemLayout="vertical"
+            size="large"
+            pagination={{
+              current: currentCategoryPage,
+              pageSize: categoryPageSize,
+              total: jobCategories.length,
+              onChange: handleCategoryPageChange,
+            }}
+            dataSource={currentJobCategories}
+            renderItem={(category) => (
+              <List.Item>
+                <Card className="shadow-lg rounded-lg flex flex-col bg-gradient-to-t from-gray-900 via-gray-800 to-gray-700 p-4">
+                  <Title level={4} className="text-white">
+                    {category.tenLoaiCongViec}
+                  </Title>
+                </Card>
+              </List.Item>
             )}
-            {/* Add empty Cols to maintain layout consistency */}
-            {currentJobCategories.length % 6 !== 0 &&
-              Array.from({ length: 6 - (currentJobCategories.length % 6) }).map(
-                (_, index) => (
-                  <Col
-                    xs={24}
-                    sm={12}
-                    md={8}
-                    lg={6}
-                    key={`empty-${index}`}
-                    className="hidden md:block"
-                  >
-                    <div className="h-full" />
-                  </Col>
-                )
-              )}
-          </Row>
-          <Pagination
-            className="mt-6 flex justify-center"
-            current={currentCategoryPage}
-            pageSize={categoryPageSize}
-            total={jobCategories.length}
-            onChange={handleCategoryPageChange}
           />
         </div>
       </div>

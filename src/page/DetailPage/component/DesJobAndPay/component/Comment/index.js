@@ -11,6 +11,7 @@ const Comment = ({ idtype }) => {
   const fetchListComment = async () => {
     try {
       const res = await jobService.getListComment(idtype);
+      console.log(res.data.content);
       setComments(res.data.content);
     } catch (error) {
       console.error("Error fetching comments:", error);

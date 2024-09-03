@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { userService } from "../../../../services/userService";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Conected = () => {
   const [listConected, setListConected] = useState([]);
   const [loading, setLoading] = useState(true);
   const defaultAvatarFemale =
     "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611731.jpg?w=740&t=st=1725095976~exp=1725096576~hmac=693722cc51a56ac9b361515cbd6053de90fbe5f8c0c21f50653dd6bc67e3c001";
-const navigate = useNavigate();
+  const navigate = useNavigate();
   // Fetch the list of connected users
   const fetchListConected = async () => {
     try {
@@ -56,9 +56,9 @@ const navigate = useNavigate();
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-8 mt-8">
         {displayedUsers.map((user) => (
-          <a
+          <NavLink
+            to={`/profile/${user.id}`}
             key={user.id}
-            onClick={() => navigate(`/profile/${user.id}`)}
             className="flex flex-col items-center justify-center text-gray-800 hover:text-blue-600"
             title="View Profile"
           >
@@ -69,7 +69,7 @@ const navigate = useNavigate();
             />
             <p className="text-center font-bold text-sm mt-1">{user.name}</p>
             <p className="text-xs text-gray-500 text-center">{user.role}</p>
-          </a>
+          </NavLink>
         ))}
       </div>
     </div>

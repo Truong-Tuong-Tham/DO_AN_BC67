@@ -25,6 +25,7 @@ const ListTypeJobsDetail = () => {
     try {
       const res = await jobService.getMenuJob();
       dispatch(postMenujobsAction(res.data.content));
+      console.log(res.data.content);
     } catch (err) {
       setError("Failed to fetch menu jobs. Please try again later.");
       console.error("Error:", err);

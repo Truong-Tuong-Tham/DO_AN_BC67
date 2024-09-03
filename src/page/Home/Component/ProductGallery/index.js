@@ -1,6 +1,6 @@
 import React from "react";
-import { Image } from "antd"; // Import Image component from Ant Design
-import "antd/dist/reset.css"; // Import Ant Design CSS
+import { Image } from "antd";
+import "antd/dist/reset.css"; 
 
 const images = [
   {
@@ -68,10 +68,10 @@ const images = [
 const ProductGallery = () => {
   return (
     <div className="p-8 mt-14">
-      <h2 className="text-5xl font-extrabold text-center mb-8 text-gray-900 leading-tight">
+      <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-center mb-8 text-gray-900 leading-tight">
         Featured Products
       </h2>
-      <p className="text-2xl text-gray-600 text-center mb-16 leading-relaxed">
+      <p className="text-lg sm:text-xl md:text-2xl text-gray-600 text-center mb-16 leading-relaxed">
         Made on Fiverr
       </p>
 
@@ -79,23 +79,23 @@ const ProductGallery = () => {
         {images.map((image, index) => (
           <div
             key={index}
-            className="relative group cursor-pointer overflow-hidden h-[300px] rounded-lg shadow-lg bg-gray-900 text-white"
+            className="relative group cursor-pointer overflow-hidden h-[300px] md:h-[350px] lg:h-[400px] rounded-lg shadow-lg bg-gray-900 text-white"
           >
-            {/* Image */}
             <Image
               src={image.url}
               alt={`Product ${index + 1}`}
-              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               preview={false}
               placeholder={<div className="w-full h-full bg-gray-300"></div>}
             />
 
-            {/* Hover Overlay */}
             <div className="absolute inset-0 flex flex-col justify-end p-5 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
               <div className="absolute inset-0 bg-black opacity-50"></div>
               <div className="relative z-10">
-                <span className="text-2xl font-bold">{image.title}</span>
-                <p className="mt-2">{image.description}</p>
+                <span className="text-lg md:text-2xl font-bold">
+                  {image.title}
+                </span>
+                <p className="mt-2 text-sm md:text-base">{image.description}</p>
               </div>
             </div>
           </div>

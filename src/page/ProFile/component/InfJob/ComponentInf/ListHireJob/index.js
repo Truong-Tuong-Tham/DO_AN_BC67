@@ -147,7 +147,7 @@ const ListHireJobs = () => {
                   {new Date(activeJob.ngayThue).toLocaleDateString("en-GB")}
                 </p>
                 <button
-                  className="mt-auto w-[100px] bg-yellow-500 text-white font-semibold py-1 px-3 rounded hover:bg-yellow-600 transition-colors duration-200"
+                  className="mt-auto w-[100px] bg-white text-white font-semibold py-1 px-3 border border-2 border-yellow-500 rounded hover:bg-yellow-500 transition-colors duration-200 text-yellow-500 hover:text-white"
                   onClick={() => handleViewClick(activeJob)}
                 >
                   View
