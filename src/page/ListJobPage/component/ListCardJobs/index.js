@@ -15,6 +15,7 @@ const ListCardJobs = () => {
       console.log("res.data.content", res.data.content);
       setJobs(res.data.content);
       dispatch(postListJobs(res.data.content));
+      console.log(res.data.content);
     } catch (err) {
       console.log("Error:", err);
     }
@@ -25,7 +26,7 @@ const ListCardJobs = () => {
   }, [idtype]);
   console.log("s", jobs);
   return (
-    <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+    <div className="grid grid-cols-1 my-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
       {jobs.map((job) => (
         <CardJobs
           key={job.id}
@@ -36,7 +37,6 @@ const ListCardJobs = () => {
           tenCongViec={job.congViec.tenCongViec}
           tenNguoiTao={job.tenNguoiTao}
           moTaNgan={job.congViec.moTaNgan}
-       
         />
       ))}
     </div>

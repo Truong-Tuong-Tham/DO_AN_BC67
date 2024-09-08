@@ -1,15 +1,18 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-import HeaderPage from '../page/Component/HeaderPage'
+import HeaderPage from '../page/Component/HeaderPage';
 
 const HomeTemPlate = () => {
   return (
     <div>
-      <HeaderPage/>
-      <Outlet/>
+   
+      <div className="sticky top-0 z-50">
+        <HeaderPage />
+      </div>
+      <Outlet />
     </div>
-  )
+  );
 }
 
-export default HomeTemPlate
+export default HomeTemPlate;

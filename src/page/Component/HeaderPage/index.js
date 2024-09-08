@@ -3,19 +3,14 @@ import { NavLink } from "react-router-dom";
 import { Dropdown, Menu, Avatar } from "antd";
 import { DownOutlined, UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  postLogOutAction,
-
-} from "../../../redux/user/userSlice";
+import { postLogOutAction } from "../../../redux/user/userSlice";
 import "./Header.css";
-
 
 const HeaderPage = () => {
   const dispatch = useDispatch();
   const { infoUser } = useSelector((state) => state.userReducer);
   console.log("infoUser", infoUser);
   // Menu items for "Fiverr Pro" dropdown
-
 
   const fiverrProMenu = (
     <Menu className="p-4 bg-white shadow-lg rounded-lg">
@@ -146,24 +141,24 @@ const HeaderPage = () => {
       <Menu.Divider />
       <Menu.Item>
         <NavLink
-          to={`/profile/${infoUser?.user?.id || ''}`}
+          to={`/profile/${infoUser?.user?.id || ""}`}
           className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
         >
           Profile
         </NavLink>
       </Menu.Item>
-  
+
       {infoUser?.user?.role === "ADMIN" && (
         <Menu.Item>
           <NavLink
-            to={`/admin/${infoUser?.user?.id || ''}`}
+            to={`/admin/${infoUser?.user?.id || ""}`}
             className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
           >
             Admin Page
           </NavLink>
         </Menu.Item>
       )}
-  
+
       <Menu.Item key="2" onClick={() => dispatch(postLogOutAction())}>
         <div className="flex items-center space-x-2">
           <LogoutOutlined />
@@ -172,7 +167,7 @@ const HeaderPage = () => {
       </Menu.Item>
     </Menu>
   );
-  
+
   return (
     <header className="bg-white text-gray-900 py-4 px-8 w-full flex items-center justify-between shadow-md font-poppins border-b border-gray-300 overflow-x-hidden">
       <div className="flex items-center">
@@ -180,11 +175,7 @@ const HeaderPage = () => {
           to="/"
           className="text-gray-900 text-4xl font-extrabold flex items-center space-x-3 hover:text-gray-600 transition duration-300 ease-in-out"
         >
-          <img
-            src="https://th.bing.com/th/id/OIG3.UPRrZRmg69BkGs4yhKtj?w=1024&h=1024&rs=1&pid=ImgDetMain"
-            alt="Logo"
-            className="w-16 h-16 object-contain"
-          />
+          
           <span className="text-3xl">Fiverr</span>
         </NavLink>
       </div>
@@ -211,7 +202,10 @@ const HeaderPage = () => {
                 size="large"
                 icon={<UserOutlined />}
                 className="cursor-pointer"
-                src={infoUser?.user?.avatar || "https://th.bing.com/th/id/OIG3.UPRrZRmg69BkGs4yhKtj?w=1024&h=1024&rs=1&pid=ImgDetMain"}
+                src={
+                  infoUser?.user?.avatar ||
+                  "https://th.bing.com/th/id/OIG3.UPRrZRmg69BkGs4yhKtj?w=1024&h=1024&rs=1&pid=ImgDetMain"
+                }
               />
             </Dropdown>
           </div>

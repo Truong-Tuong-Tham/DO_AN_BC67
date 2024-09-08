@@ -16,7 +16,8 @@ const ListJobs = () => {
   const idjobNumber = Number(idjob);
   const items = menuJobs.find((item) => item.id === idjobNumber);
   const navigate = useNavigate();
- const defaultimg="https://img.freepik.com/free-photo/3d-illustration-businessman-with-glasses-city-street-background_1142-51028.jpg?t=st=1725209969~exp=1725213569~hmac=b3c1cf30df1137796b36361c797f6be8ec1c6186681328d05e6d64867b8f32c9&w=740";
+  const defaultimg =
+    "https://img.freepik.com/free-photo/3d-illustration-businessman-with-glasses-city-street-background_1142-51028.jpg?t=st=1725209969~exp=1725213569~hmac=b3c1cf30df1137796b36361c797f6be8ec1c6186681328d05e6d64867b8f32c9&w=740";
   const renderMenuJobs = () => {
     if (!items || !items.dsNhomChiTietLoai) return null;
 
@@ -34,7 +35,9 @@ const ListJobs = () => {
                 alt={group.tenNhom}
               />
             </div>
-            <h2 className="text-lg text-pink-400 font-semibold text-center">{group.tenNhom}</h2>
+            <h2 className="text-lg text-green-700 font-semibold text-center">
+              {group.tenNhom}
+            </h2>
             <ul className="list-disc pl-5 space-y-1">
               {group.dsChiTietLoai.map((detail) => (
                 <li

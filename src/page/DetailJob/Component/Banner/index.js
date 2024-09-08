@@ -28,27 +28,24 @@ const BannerDetailJobs = () => {
   const currentJob = menuJobs.find((job) => job.id === idjobNumber);
 
   return (
-    <div className="w-[90%] m-auto h-full ">
-      <div className="relative  p-8  ">
-        <img
-          className=" rounded-3xl object-cover"
-          src={randomBannerImage}
-          alt="Banner"
-        />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center space-y-4">
-          <h1 className="text-white text-4xl font-bold">
-            {currentJob ? currentJob.tenLoaiCongViec : "Job Type Not Found"}
-          </h1>
-          <h2 className="text-white text-2xl">
-            {currentJob
-              ? `Explore the best opportunities in ${currentJob.tenLoaiCongViec}`
-              : "Discover a world of possibilities"}
-          </h2>
-          <button className="mt-4 px-6 py-3 bg-white text-black rounded-full shadow-lg hover:bg-gray-200 transition duration-300">
-            Learn More
-          </button>
-        </div>
-        
+    <div className="relative mt-9 w-[90%] m-auto h-full">
+      <img
+        className="w-full h-[300px] object-cover rounded-3xl"
+        src={randomBannerImage}
+        alt="Banner"
+      />
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 py-6">
+        <h1 className="text-white text-2xl md:text-4xl font-bold">
+          {currentJob ? currentJob.tenLoaiCongViec : "Job Type Not Found"}
+        </h1>
+        <h2 className="text-white text-base md:text-2xl mt-2">
+          {currentJob
+            ? `Explore the best opportunities in ${currentJob.tenLoaiCongViec}`
+            : "Discover a world of possibilities"}
+        </h2>
+        <button className="mt-4 px-6 py-2 md:px-8 md:py-3 bg-white text-black rounded-full shadow-lg hover:bg-gray-200 transition duration-300">
+          Learn More
+        </button>
       </div>
     </div>
   );

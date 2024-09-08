@@ -6,6 +6,9 @@ import { useDispatch } from "react-redux";
 
 import BannerDetailJobs from "./Component/Banner";
 import ListJobs from "./Component/ListJobs";
+import FooterDetailJob from "./Component/FooterDetailJob";
+import FAQDetailJob from "./Component/FAQ";
+import GuideArticles from "./Component/GuideArticles";
 
 const DetailJob = () => {
   const dispatch = useDispatch();
@@ -29,6 +32,9 @@ const DetailJob = () => {
     <div className="w-full max-w-[80%] mx-auto overflow-hidden">
       <BannerDetailJobs />
       <ListJobs/>
+       <GuideArticles/>
+      <FAQDetailJob/>
+      <FooterDetailJob/>
     </div>
   );
 };

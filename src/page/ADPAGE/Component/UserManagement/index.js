@@ -209,14 +209,14 @@ const UserManagement = () => {
       key: "actions",
       render: (_, record) => (
         <Space size="middle">
-          <Button
-            type="link"
-        
-            onClick={() => handleViewDetails(record.id)}
-          >
+          <Button type="link" onClick={() => handleViewDetails(record.id)}>
             View
           </Button>
-          <Button type="link" className="text-yellow-500 hover:text-yellow-700" onClick={() => handleEditUser(record.id)}>
+          <Button
+            type="link"
+            className="text-yellow-500 hover:text-yellow-700"
+            onClick={() => handleEditUser(record.id)}
+          >
             Edit
           </Button>
           <Button type="link" danger onClick={() => handleDelete(record.id)}>
@@ -228,15 +228,17 @@ const UserManagement = () => {
   ];
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+    <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
+      <h1 className="text-2xl text-center text-teal-700 font-bold mb-4">User Management</h1>
       <div className="mb-4 flex justify-between items-center">
-        <Button
+        <button
           type="primary"
           onClick={() => setIsAddModalVisible(true)}
-          className="shadow-md hover:shadow-lg transition-shadow"
+          className="bg-green-800 text-white px-4 py-2 rounded shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-300"
         >
           Add User
-        </Button>
+        </button>
+
         <div className="flex space-x-4 items-center">
           <Input
             placeholder="Search by name"
@@ -267,25 +269,27 @@ const UserManagement = () => {
         className="shadow-md h-[540px] rounded bg-white"
       />
 
-      <div className="flex justify-center items-center py-4 space-x-4">
-        <Button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-          className="bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors rounded-lg px-4 py-2"
-        >
-          Previous
-        </Button>
-        <span className="text-lg font-medium text-gray-700">
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          disabled={currentPage === totalPages}
-          onClick={() => handlePageChange(currentPage + 1)}
-          className="bg-gray-300 text-gray-700 hover:bg-gray-400 transition-colors rounded-lg px-4 py-2"
-        >
-          Next
-        </Button>
-      </div>
+<div className="flex justify-center items-center py-4 space-x-4">
+  <button
+    disabled={currentPage === 1}
+    onClick={() => handlePageChange(currentPage - 1)}
+    className="bg-gray-300 text-gray-700 hover:bg-gray-400 disabled:bg-gray-200 disabled:text-gray-500 transition-colors rounded-lg px-4 py-2"
+  >
+    Previous
+  </button>
+  <span className="text-xl font-bold text-gray-900 bg-gray-200 px-4 py-2 rounded-md shadow-sm">
+  Page {currentPage} of {totalPages}
+</span>
+
+  <button
+    disabled={currentPage === totalPages}
+    onClick={() => handlePageChange(currentPage + 1)}
+    className="bg-gray-300 text-gray-700 hover:bg-gray-400 disabled:bg-gray-200 disabled:text-gray-500 transition-colors rounded-lg px-4 py-2"
+  >
+    Next
+  </button>
+</div>
+
 
       <UserDetailModal
         visible={isDetailModalVisible}

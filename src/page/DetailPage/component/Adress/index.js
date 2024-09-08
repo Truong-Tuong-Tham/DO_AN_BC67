@@ -5,7 +5,7 @@ import { FaHome } from "react-icons/fa"; // Importing Font Awesome home icon
 
 const Address = () => {
   const { listJobs } = useSelector((state) => state.jobReducer);
-  const { idtype } = useParams();
+  const { idtype,idjob } = useParams();
 
   // Find the job type by idtype
   const jobType = listJobs.find((job) => job.id === parseInt(idtype, 10));
@@ -17,38 +17,47 @@ const Address = () => {
   const breadcrumbItems = [
     {
       name: jobType.tenLoaiCongViec,
-      link: "/jobs",
+      link: `/detail/jobs/${idtype}`,
     },
     {
       name: jobType.tenNhomChiTietLoai,
-      link: `/jobs/${idtype}`,
+      link: `/detail/jobs/${idtype}/listjobs/${idjob }`,
     },
     {
       name: jobType.tenChiTietLoai,
-      link: `/jobs/${idtype}/details`,
+      link:`/detail/jobs/${idtype}/listjobs/${idjob }`,
     },
   ];
 
   return (
-    <div className=" bg-white rounded-lg text-sm">
-      <nav className="flex items-center space-x-2">
-        <Link to="/" className="text-gray-600 hover:text-gray-800">
-          <FaHome className="text-xl" />
-        </Link>
-        <span className="text-gray-500">/</span>
-        {breadcrumbItems.map((item, index) => (
-          <React.Fragment key={index}>
-            <Link
-              to={item.link}
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              {item.name}
-            </Link>
-            {index < breadcrumbItems.length - 1 && (
-              <span className="text-gray-500">/</span>
-            )}
-          </React.Fragment>
-        ))}
+    <div className="bottom-4 left-4  p-2 sm:p-3 rounded-md ">
+      <nav className="text-xs sm:text-sm">
+        <ol className="list-none p-0 inline-flex space-x-2 items-center">
+          <li className="flex items-center">
+            <FaHome
+              className="cursor-pointer hover:text-green-500 transition-colors duration-300 text-lg text-gray-600"
+              onClick={() => (window.location.href = "/")}
+            />
+            <span className="mx-1 text-gray-500">/</span>
+          </li>
+          {breadcrumbItems.map((item, index) => (
+            <li key={index} className="flex items-center">
+              {item.link ? (
+                <Link
+                  to={item.link}
+                  className="text-gray-600 hover:text-green-500 transition-colors duration-300 font-medium"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <span className="text-gray-800 font-semibold">{item.name}</span>
+              )}
+              {index < breadcrumbItems.length - 1 && (
+                <span className="mx-1 text-gray-500">/</span>
+              )}
+            </li>
+          ))}
+        </ol>
       </nav>
     </div>
   );

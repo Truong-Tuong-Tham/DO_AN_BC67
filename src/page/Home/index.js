@@ -5,11 +5,13 @@ import ListTypeJobs from "./Component/ListTypeJobs";
 
 import Video from "./Component/Video";
 import BannerFiverrPro from "./Component/BannerFiverrPro";
-import CarouselVideo from "./Component/CarouselVideo";
+
 import BannerLogoMaker from "./Component/BannerLogoMaker";
 import ProductGallery from "./Component/ProductGallery";
-import BannerStartUp from "./Component/BannerStartUp";
+
 import Features from "./Component/Introduce";
+import TestimonialCarousel from "./Component/CarouselVideo";
+import Footer from "../Component/Footer";
 
 const HomePage = () => {
   return (
@@ -19,10 +21,10 @@ const HomePage = () => {
       <Features/>
       <Video/>
       <BannerFiverrPro/>
-      <CarouselVideo/>
-      <BannerStartUp/>
-      <BannerLogoMaker/>
+      <TestimonialCarousel/>
+       <BannerLogoMaker/>
       <ProductGallery/>
+      <Footer/>
     </div>
   );
 };

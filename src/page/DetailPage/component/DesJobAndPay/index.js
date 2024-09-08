@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaStar } from "react-icons/fa"; // Import star icon for ratings
+
 import { Collapse } from "antd";
 import { jobService } from "../../../../services/jobService";
 import Comment from "./component/Comment";
@@ -9,8 +9,8 @@ import Comment from "./component/Comment";
 const { Panel } = Collapse;
 
 const DesJobAndPay = () => {
-  const [ListHireJob,setListHireJob]=useState();
-  console.log("ListHireJob",ListHireJob);
+  const [ListHireJob, setListHireJob] = useState();
+  console.log("ListHireJob", ListHireJob);
   const { listJobs } = useSelector((state) => state.jobReducer);
   console.log("listJobs", listJobs);
   const { idtype, idjob } = useParams();
@@ -22,51 +22,51 @@ const DesJobAndPay = () => {
     try {
       const res = await jobService.getListHireJobs(idtype);
       setListHireJob(res.data.content);
-      console.log( "jobs",res.data.content);
+      console.log("jobs", res.data.content);
     } catch (error) {
       console.error("Error fetching comments:", error);
     }
   };
   useEffect(() => {
     fetchListHireJobs();
-  },[])
-const handleHireClick = async () => {
-  if (!infoUser) {
-    navigate("/auth/login");
-    return;
-  }
+  }, []);
+  const handleHireClick = async () => {
+    if (!infoUser) {
+      navigate("/auth/login");
+      return;
+    }
 
-  if (!ListHireJob ) {
-    console.error("ListHireJob is empty or undefined");
-    return;
-  }
+    if (!ListHireJob) {
+      console.error("ListHireJob is empty or undefined");
+      return;
+    }
 
-  const jobAlreadyHired = ListHireJob.some(
-    (job) => job.congViec.id === jobType.id
-  );
+    const jobAlreadyHired = ListHireJob.some(
+      (job) => job.congViec.id === jobType.id
+    );
 
-  if (jobAlreadyHired) {
-    alert("This job has already been hired.");
-    return;
-  }
+    if (jobAlreadyHired) {
+      alert("This job has already been hired.");
+      return;
+    }
 
-  const currentDate = new Date().toISOString(); // Getting the current date in ISO format
-  const hireJobData = {
-    maCongViec: jobType.id,
-    maNguoiThue: infoUser.user.id,
-    ngayThue: currentDate,
-    hoanThanh: false,
+    const currentDate = new Date().toISOString(); // Getting the current date in ISO format
+    const hireJobData = {
+      maCongViec: jobType.id,
+      maNguoiThue: infoUser.user.id,
+      ngayThue: currentDate,
+      hoanThanh: false,
+    };
+
+    try {
+      const response = await jobService.postHireJob(hireJobData);
+      console.log("Hire action successful:", response);
+      // Optionally, you might want to update the list or show a success message to the user
+      fetchListHireJobs();
+    } catch (error) {
+      console.error("Hire action failed:", error);
+    }
   };
-
-  try {
-    const response = await jobService.postHireJob(hireJobData);
-    console.log("Hire action successful:", response);
-    // Optionally, you might want to update the list or show a success message to the user
-    fetchListHireJobs();
-  } catch (error) {
-    console.error("Hire action failed:", error);
-  }
-};
 
   // Find the job type by idtype
   const jobType = listJobs.find((job) => job.id === parseInt(idtype, 10));
@@ -83,190 +83,216 @@ const handleHireClick = async () => {
     moTaNgan,
     giaTien,
   } = congViec;
- 
-  // Split the short description at line breaks and add a bullet point at the start of each line
-  const formattedMoTaNgan = moTaNgan
-    .split("\r\n")
-    .filter((line) => line.trim() !== "") // Filter out any empty lines
-    .map((line, index) => {
-      const truncatedLine = line.length > 30 ? `${line.slice(0, 30)}...` : line; // Truncate if necessary
-      return (
-        <p key={index} className="flex items-center text-gray-700">
-          <span className="mr-2">•</span>
-          {truncatedLine}
-        </p>
-      );
-    });
- 
 
+  // Split the short description at line breaks and add a bullet point at the start of each line
 
   return (
-    <div className="w-full flex justify-center p-6">
-      <div className="bg-white w-full md:w-3/5 shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
-        <div className="p-6 flex-1 flex flex-col bg-gray-50 rounded-lg shadow-lg">
+    <div className="w-full flex justify-center">
+      <div className="bg-white w-full md:w-3/5 shadow-lg rounded-lg overflow-hidden flex flex-col">
+        {/* Card Content */}
+        <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
           <img
             src={hinhAnh}
-            alt={tenCongViec}
-            className="w-full h-64 object-cover md:w-1/2 md:h-auto"
+            alt="Sustainable Practices for a Greener Future"
+            className="w-full h-64 object-cover rounded-t-lg"
+            loading="lazy"
           />
-          <h2 className="text-4xl font-semibold text-gray-900 mb-6">
+          <h2 className="text-2xl font-semibold text-green-900 mt-4 mb-2">
             {tenCongViec}
           </h2>
-          <div className="flex items-center space-x-6 mb-8">
-            <img
-              src={avatar}
-              alt={tenNguoiTao}
-              className="w-24 h-24 rounded-full border-2 border-gray-300 shadow-lg"
-            />
-            <div className="flex flex-col">
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">
-                {tenNguoiTao}
-              </h3>
-              <div className="flex items-center mb-2">
-                {[...Array(saoCongViec)].map((_, index) => (
-                  <FaStar key={index} className="text-yellow-400 text-xl" />
-                ))}
-                {[...Array(5 - saoCongViec)].map((_, index) => (
-                  <FaStar
-                    key={index + saoCongViec}
-                    className="text-gray-300 text-xl"
-                  />
-                ))}
-              </div>
-              <p className="text-sm text-gray-600">{danhGia} reviews</p>
-            </div>
-          </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <h4 className="text-2xl font-semibold text-gray-900 mb-4">
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <h4 className="text-xl font-semibold text-green-600 mb-4">
               Description
             </h4>
-            <p className="text-gray-700 leading-relaxed">{moTa}</p>
+            <p className="text-gray-700">{moTa}</p>
+            <div className="flex flex-col space-y-4  animated fadeIn faster   flex justify-center items-center inset-0 outline-none focus:outline-none ">
+
+</div>
+
           </div>
-        </div>
-        <div className="flex items-center mx-auto my-8 p-4 w-80 h-32 bg-white rounded-lg shadow-xl">
-          <section className="flex justify-center items-center w-16 h-16 rounded-full bg-gradient-to-r from-[#F9C97C] to-[#A2E9C1] hover:from-[#C9A9E9] hover:to-[#7EE7FC] transform hover:scale-105 transition-transform duration-300">
-            <img
-              src={avatar}
-              alt={tenNguoiTao}
-              className="w-14 h-14 rounded-full border-2 border-gray-300"
-            />
-          </section>
+      
 
-          <section className="flex-1 flex flex-col justify-center border-l border-gray-300 pl-4">
-            <h3 className="text-gray-700 font-semibold text-base mb-1">
-              {tenNguoiTao}
-            </h3>
-            <h4 className="bg-clip-text text-transparent bg-gradient-to-l from-[#005BC4] to-[#27272A] text-lg font-bold mb-2">
-              Web Developer
-            </h4>
-            <div className="flex gap-3">
-              <svg
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 text-blue-500 hover:scale-110 transition-transform duration-300 cursor-pointer"
-              >
-                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-              </svg>
-              <svg
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 text-red-500 hover:scale-110 transition-transform duration-300 cursor-pointer"
-              >
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-              </svg>
-              <svg
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 text-green-500 hover:scale-110 transition-transform duration-300 cursor-pointer"
-              >
-                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
-              </svg>
-              <svg
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                className="w-6 h-6 text-purple-500 hover:scale-110 transition-transform duration-300 cursor-pointer"
-              >
-                <path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7" />
-              </svg>
-            </div>
-          </section>
         </div>
 
-        <div className="container mx-auto p-4 max-w-2xl">
-          <h1 className="text-2xl font-semibold mb-4">
-            Frequently Asked Questions (FAQ)
-          </h1>
-          <Collapse defaultActiveKey={["1"]} className="space-y-3">
-            <Panel header="Question 1: How do I create an account?" key="1">
-              <p className="text-gray-600">
-                To create an account, click the "Sign Up" button and fill in the
-                required information.
-              </p>
-            </Panel>
-            <Panel header="Question 2: Can I change my password?" key="2">
-              <p className="text-gray-600">
-                Yes, you can change your password from the account settings
-                page.
-              </p>
-            </Panel>
-            <Panel
-              header="Question 3: How do I contact customer support?"
-              key="3"
-            >
-              <p className="text-gray-600">
-                You can contact customer support through the "Contact Us" page
-                or email us at support@example.com.
-              </p>
-            </Panel>
-            <Panel header="Question 4: Can I delete my account?" key="4">
-              <p className="text-gray-600">
-                Yes, you can delete your account from the account settings page.
-                Please make sure to back up any important data before deleting
-                your account.
-              </p>
-            </Panel>
-          </Collapse>
+    {/* Container for both sections */}
+<div className="flex flex-col md:flex-row gap-6 mx-auto p-4 max-w-7xl">
+  {/* Profile Info */}
+  <div className="flex-1 max-w-xs md:max-w-sm mt-10 mb-4">
+    <div className="bg-white p-6 rounded-lg shadow-md relative">
+      {/* Centering the avatar */}
+      <div className="flex justify-center">
+        <div className="relative">
+          <img
+            src={avatar}
+            alt={tenNguoiTao}
+            className="shadow-md rounded-full border-none max-w-[80px] mt-[-3rem]"
+          />
         </div>
-        <Comment idtype={idtype}/>
       </div>
-      <div className="w-full md:w-2/5 p-6  bg-white rounded-xl shadow-lg">
-        <div className="w-full h-auto bg-gray-100 rounded-xl p-8 flex flex-col items-center text-center sticky top-0 z-10">
-          <h3 className="text-3xl font-extrabold text-gray-900 mb-6">
-            <i className="fas fa-file-alt text-yellow-600"></i> Summary
-          </h3>
-          <h2 className="text-2xl font-medium text-gray-700 mb-2">
-            <i className="fas fa-graduation-cap text-yellow-500"></i> Cum Laude{" "}
-            <span className="text-yellow-600">${giaTien}</span>
-          </h2>
-          <div className="text-gray-600 mb-8">
-            <p className="text-lg leading-relaxed">
-              <i className="fas fa-search text-gray-800"></i>{" "}
-              <span className="font-semibold text-gray-800">Discover:</span>{" "}
-              {formattedMoTaNgan}
-            </p>
-            <ul className="mt-4 text-sm text-gray-500 italic list-none space-y-2">
-              <li>
-                <i className="fas fa-circle text-yellow-500"></i> 40+
-                Personalized Growth Strategies
-              </li>
-              <li>
-                <i className="fas fa-circle text-yellow-500"></i> Hashtag &
-                Optimization Guide
-              </li>
-              <li>
-                <i className="fas fa-circle text-yellow-500"></i> News List,
-                Tools & Resources
-              </li>
-            </ul>
+      <div className="text-center mt-12">
+        <div className="flex justify-center space-x-3">
+          <div className="p-1 text-center">
+            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
+              3,360
+            </span>
+            <span className="text-xs text-slate-400">Jobs</span>
           </div>
-          <button
-            onClick={handleHireClick}
-            className="w-full bg-yellow-500 text-white font-bold py-3 rounded-xl hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition duration-300"
-          >
-            <i className="fas fa-arrow-right"></i> Continue (${giaTien})
-          </button>
+          <div className="p-1 text-center">
+            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
+              2,454
+            </span>
+            <span className="text-xs text-slate-400">Followers</span>
+          </div>
+          <div className="p-1 text-center">
+            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
+              564
+            </span>
+            <span className="text-xs text-slate-400">Following</span>
+          </div>
+        </div>
+      </div>
+      <div className="text-center mt-6">
+        <h3 className="text-lg text-green-600 cursor-pointer font-bold leading-tight mb-1">
+          {tenNguoiTao}
+        </h3>
+        <div className="text-xs mt-0 mb-1 text-slate-400 font-bold uppercase">
+          <i className="fas fa-map-marker-alt mr-1 text-slate-400 opacity-75"></i>
+          City, VN
+        </div>
+      </div>
+      <div className="mt-6 py-3 border-t border-slate-200 text-center">
+        <p className="font-light leading-relaxed text-slate-600 mb-2 text-sm">
+          A versatile and talented individual with a broad range of skills, this person has made a significant impact in their field. With a dedication to their craft, they continue to inspire and engage through their work, showcasing a unique blend of creativity and expertise.
+        </p>
+        <a
+          href="javascript:;"
+          className="font-normal text-green-600 hover:text-slate-400 text-sm"
+        >
+          Follow Account
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {/* FAQ Section */}
+  <div className="flex-1 container mx-auto p-6 max-w-2xl">
+  <h1 className="text-3xl text-green-600 font-bold mb-6 border-b-2 border-green-200 pb-2">
+    Frequently Asked Questions (FAQ)
+  </h1>
+  <Collapse defaultActiveKey={["1"]} className="space-y-4">
+    <Panel
+      header="Question 1: How do I apply for a job?"
+      key="1"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        To apply for a job, click on the job listing and select the "Apply Now" button. You will be prompted to submit your resume and cover letter or fill out the application form provided.
+      </p>
+    </Panel>
+    <Panel
+      header="Question 2: How can I create a job listing?"
+      key="2"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        To create a job listing, log in to your employer account and navigate to the "Post a Job" section. Fill out the required details about the job position and submit the listing for review.
+      </p>
+    </Panel>
+    <Panel
+      header="Question 3: How do I track my job application status?"
+      key="3"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        You can track your job application status by logging into your account and visiting the "My Applications" section. Here, you can see updates on the progress of your applications.
+      </p>
+    </Panel>
+    <Panel
+      header="Question 4: What should I do if I forget my password?"
+      key="4"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        If you forget your password, click on the "Forgot Password" link on the login page. Follow the instructions to reset your password using the email address associated with your account.
+      </p>
+    </Panel>
+    <Panel
+      header="Question 5: How can I update my profile information?"
+      key="5"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        To update your profile information, log in to your account and go to the "Profile" section. Here, you can edit your personal details, upload new documents, and make other changes as needed.
+      </p>
+    </Panel>
+    <Panel
+      header="Question 6: How can I contact support if I have more questions?"
+      key="6"
+      className="bg-gray-100 rounded-lg shadow-md"
+    >
+      <p className="text-gray-700 text-base p-4">
+        If you have additional questions or need further assistance, you can contact our support team through the "Contact Us" page or email us at support@example.com. We’re here to help!
+      </p>
+    </Panel>
+  </Collapse>
+</div>
+
+
+</div>
+
+
+        <Comment idtype={idtype} />
+      </div>
+
+      <div className="w-full md:w-2/5 p-6 bg-gray-50 rounded-lg shadow-md">
+        <div className="flex justify-center sticky z-10 top-0 items-center min-h-screen bg-cover bg-center bg-[url('https://images.pexels.com/photos/2215534/pexels-photo-2215534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
+          <div className="max-w-lg mx-auto p-6">
+            <div className="relative flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white rounded-xl shadow-lg p-8">
+              <div className="relative pb-6 mb-6 border-b border-gray-600">
+                <p className="text-xs font-semibold uppercase text-gray-400">
+                  Cum Laude
+                </p>
+                <h1 className="mt-3 text-3xl font-bold text-white flex flex-col items-center">
+                  <span className="text-6xl">${giaTien}</span>
+                  <span className="text-xl text-gray-300">per job</span>
+                </h1>
+              </div>
+              <div className="p-0">
+                <ul className="list-disc list-inside space-y-2 text-gray-300 text-sm">
+                  {moTaNgan
+                    .split(".")
+                    .filter((item) => item.trim() !== "")
+                    .map((item, index) => (
+                      <li key={index} className="text-base">
+                        {item.trim()}.
+                      </li>
+                    ))}
+                </ul>
+              </div>
+              <div className="p-0 mt-8">
+                {ListHireJob &&
+                ListHireJob.some((job) => job.congViec.id === jobType.id) ? (
+                  <button
+                    disabled
+                    className="w-full py-3 text-lg text-gray-500 bg-gray-300 rounded-lg shadow-md cursor-not-allowed"
+                    type="button"
+                  >
+                    <i className="fas fa-check mr-2"></i> Already Hired
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleHireClick}
+                    className="w-full py-3 text-lg text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-500 transition-transform transform hover:scale-105"
+                    type="button"
+                  >
+                    <i className="fas fa-arrow-right mr-2"></i> Continue ($
+                    {giaTien})
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

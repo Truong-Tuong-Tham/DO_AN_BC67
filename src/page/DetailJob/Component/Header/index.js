@@ -56,6 +56,14 @@ const HeaderDetail = () => {
           Profile
         </NavLink>
       </Menu.Item>
+      <Menu.Item>
+        <NavLink
+          to={`/`}
+          className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
+        >
+          Home
+        </NavLink>
+      </Menu.Item>
 
       {infoUser?.user?.role === "ADMIN" && (
         <Menu.Item>
@@ -69,8 +77,10 @@ const HeaderDetail = () => {
       )}
 
       <Menu.Item key="2" onClick={() => dispatch(postLogOutAction())}>
-        <div className="flex items-center space-x-2">
-          <span>Log Out</span>
+        <div className="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 cursor-pointer">
+          <span className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg">
+            Log Out
+          </span>
         </div>
       </Menu.Item>
     </Menu>
@@ -196,34 +206,37 @@ const HeaderDetail = () => {
     <div className="h-full w-full p-5">
       <div className="flex justify-between items-center">
         <div class="font-extrabold tracking-widest  text-xl">
-          <a onClick={() => navigate("/")} class="transition duration-500 cursor-pointer  text-3xl hover:text-green-800">
+          <a
+            onClick={() => navigate("/")}
+            class="transition duration-500 cursor-pointer  text-3xl hover:text-green-800"
+          >
             FIVERR
           </a>
         </div>
         <div className="flex-1 max-w-[350px] me-[600px] relative">
           <div className="flex h-[30px]">
-            <div className="flex w-10 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white p-5">
+            <div className="relative flex items-center w-full max-w-md mx-auto rounded-lg border border-gray-200 bg-white overflow-hidden">
               <svg
                 viewBox="0 0 20 20"
                 aria-hidden="true"
-                className="pointer-events-none absolute w-8 fill-gray-500  h-5 mb-2 transition"
+                className="absolute left-0 w-8 h-5 text-gray-500 ml-3"
               >
                 <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z"></path>
               </svg>
+              <input
+                type="text"
+                className="flex-1 pl-12 pr-16 py-2 border border-gray-200 rounded-lg outline-none"
+                value={inputValue}
+                onChange={handleInputChange}
+                placeholder="Search jobs..."
+              />
+              <button
+                onClick={handleSearch}
+                className="absolute inset-y-0 right-0 flex items-center justify-center px-4 py-2 text-white bg-green-950 rounded-r-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                Search
+              </button>
             </div>
-            <input
-              type="text"
-              className="flex-1  rounded-tr-lg rounded-br-lg border border-gray-200 px-4 py-2 outline-none w-full "
-              value={inputValue}
-              onChange={handleInputChange}
-              placeholder="Search jobs..."
-            />
-            <button
-              onClick={handleSearch}
-              className="absolute inset-y-0 right-0 flex items-center justify-center px-4 py-2 text-white bg-green-950 rounded-tr-lg rounded-br-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              Search
-            </button>
           </div>
         </div>
 

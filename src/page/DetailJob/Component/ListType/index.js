@@ -25,10 +25,8 @@ const ListTypeJobsDetail = () => {
     try {
       const res = await jobService.getMenuJob();
       dispatch(postMenujobsAction(res.data.content));
-      console.log(res.data.content);
     } catch (err) {
       setError("Failed to fetch menu jobs. Please try again later.");
-      console.error("Error:", err);
     } finally {
       setLoading(false);
     }
@@ -38,12 +36,9 @@ const ListTypeJobsDetail = () => {
   const renderMenu = (dsNhomChiTietLoai, itemId) => (
     <Menu>
       {dsNhomChiTietLoai.map((nhom) => (
-        <React.Fragment key={`group-${nhom.id}`}>
+        <React.Fragment key={nhom.id}>
           <Menu.Item>
-            <span
-             
-              className="font-semibold text-gray-700 hover:text-gray-900"
-            >
+            <span className="font-semibold text-gray-700 hover:text-green-700 text-sm sm:text-base">
               {nhom.tenNhom}
             </span>
           </Menu.Item>
@@ -53,7 +48,7 @@ const ListTypeJobsDetail = () => {
                 onClick={() =>
                   navigate(`/detail/jobs/${itemId}/listjobs/${chiTiet.id}`)
                 }
-                className="pl-4 font-light cursor-pointer text-gray-600 hover:text-gray-800"
+                className="pl-4 cursor-pointer text-gray-600 hover:text-green-700 text-xs sm:text-sm"
               >
                 {chiTiet.tenChiTiet}
               </span>
@@ -71,7 +66,7 @@ const ListTypeJobsDetail = () => {
       return menuJobs.map((item) => (
         <li
           key={item.id}
-          className="flex items-center justify-center p-2 m-2 bg-white border border-gray-200 rounded-lg shadow-md h-12 whitespace-nowrap overflow-hidden"
+          className="flex items-center justify-center p-2 m-1 rounded-lg bg-white shadow-sm  transition-shadow duration-300 whitespace-nowrap"
         >
           <Dropdown
             overlay={renderMenu(item.dsNhomChiTietLoai, item.id)}
@@ -79,16 +74,20 @@ const ListTypeJobsDetail = () => {
           >
             <div className="text-center cursor-pointer">
               <div className="relative flex items-center">
-                <div className="flex-grow border-t border-gray-300" />
-                <span onClick={() => navigate(`/detail/jobs/${item.id}`)} className="px-4 text-sm font-semibold text-gray-800">{item.tenLoaiCongViec}</span>
-                <div className="flex-grow border-t border-gray-300" />
+                <div className="flex-grow border-t border-gray-200" />
+                <span className="relative group hover:text-green-700">
+                  <span className="absolute inset-x-0 bottom-0 h-[2px] bg-green-700 transition-all duration-300 group-hover:w-full w-0 " />
+                  {item.tenLoaiCongViec}
+                </span>
+
+                <div className="flex-grow border-t border-gray-200" />
               </div>
             </div>
           </Dropdown>
         </li>
       ));
     }
-    return <p className="text-gray-600">No jobs available</p>;
+    return <p className="text-gray-600 text-sm">No jobs available</p>;
   };
 
   // Fetch menu jobs when the component mounts
@@ -99,7 +98,7 @@ const ListTypeJobsDetail = () => {
   // Show loading spinner if data is being fetched
   if (loading) {
     return (
-      <div className="flex justify-center py-10 bg-gray-100">
+      <div className="flex justify-center py-8 bg-gray-50">
         <Spin size="large" />
       </div>
     );
@@ -108,30 +107,54 @@ const ListTypeJobsDetail = () => {
   // Show error message if there is an error
   if (error) {
     return (
-      <div className="flex justify-center py-10 bg-gray-100">
+      <div className="flex justify-center py-8 bg-gray-50">
         <p className="text-red-500">{error}</p>
       </div>
     );
   }
 
+  // Handle scroll left
+  const scrollLeft = () => {
+    scrollContainerRef.current.scrollBy({ left: -200, behavior: "smooth" });
+  };
+
+  // Handle scroll right
+  const scrollRight = () => {
+    scrollContainerRef.current.scrollBy({ left: 200, behavior: "smooth" });
+  };
+
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div
-        ref={scrollContainerRef}
-        className="flex flex-nowrap overflow-x-auto w-full max-w-7xl mx-auto space-x-4 py-2 px-4"
-        style={{
-          scrollbarWidth: "none", // For Firefox
-          msOverflowStyle: "none" // For Internet Explorer and Edge
-        }}
-      >
-        {renderMenuJobs()}
+    <div className="relative">
+      {/* Full-width lines above and below the content */}
+      <hr className="absolute top-0 left-0 w-full h-[1px] bg-green-600 border-none" />
+      <hr className="absolute bottom-0 left-0 w-full h-[1px] bg-green-600 border-none" />
+
+      <div className="flex items-center justify-center relative z-10">
+        {/* Scroll left button */}
+        <button
+          onClick={scrollLeft}
+          aria-label="Scroll left"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2  text-gray-600 p-2 hover:bg-green-700 hover:text-white rounded-full shadow-md  focus:outline-none"
+        >
+          &lt;
+        </button>
+
+        <div
+          ref={scrollContainerRef}
+          className="flex flex-nowrap overflow-x-hidden scroll-smooth w-full max-w-6xl mx-auto  whitespace-nowrap"
+        >
+          {renderMenuJobs()}
+        </div>
+
+        {/* Scroll right button */}
+        <button
+          onClick={scrollRight}
+          aria-label="Scroll right"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2  text-gray-600 p-2 hover:bg-green-700 hover:text-white rounded-full shadow-md  focus:outline-none"
+        >
+          &gt;
+        </button>
       </div>
-      {/* Hide scrollbar for WebKit browsers */}
-      <style jsx>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 };

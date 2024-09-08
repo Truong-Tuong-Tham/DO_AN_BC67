@@ -40,4 +40,5 @@ export const userService = {
     let uri = "/api/skill";
     return https.get(uri);
   },
+  
 };

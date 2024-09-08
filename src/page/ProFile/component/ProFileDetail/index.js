@@ -15,17 +15,18 @@ const PFDetail = ({ iduser }) => {
   }, [infoUser, navigate]);
 
   return (
-    <div className="w-full mx-auto min-h-screen flex flex-col md:flex-row items-center justify-center p-6 bg-gray-100 space-y-6 md:space-y-0 md:space-x-6">
-      <div className="flex flex-col w-full md:w-1/2">
+    <div className="w-full  min-h-screen p-6  space-y-6 md:space-y-0 md:space-x-6">
+      <div className=" w-full ">
         <CardInF idUser={iduser} />
       </div>
-      <div className="flex flex-col w-full md:w-1/2">
-        {infoUser ? (
-          <Inf info={infoUser.user} />
-        ) : (
-          <p className="text-gray-600">Loading...</p>
-        )}
-      </div>
+      <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
+  {infoUser ? (
+    <Inf info={infoUser.user} />
+  ) : (
+    <p className="text-gray-600 text-center">Loading...</p>
+  )}
+</div>
+
     </div>
   );
 };

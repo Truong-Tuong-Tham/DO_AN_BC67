@@ -22,7 +22,7 @@ const Video = () => {
   }, []);
 
   return (
-    <div className=" w-full h-full min-h-screen flex items-center justify-center p-8">
+    <div className=" w-full h-full  flex items-center justify-center p-8">
       <div className="relative w-[95%] h-[60%] rounded-2xl overflow-hidden">
         {/* Background video */}
         <video

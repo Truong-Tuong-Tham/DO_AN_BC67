@@ -184,7 +184,7 @@ const JobManagement = () => {
   return (
     <div className="p-8 bg-gray-50">
       <div className="mb-8">
-        <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-4">
+        <h1 className="text-2xl font-extrabold text-center text-teal-700 mb-4">
           Job Listings
         </h1>
         <div className="flex justify-between items-center mb-6">
@@ -199,7 +199,7 @@ const JobManagement = () => {
             <Button
               type="primary"
               onClick={handleCreateClick}
-              className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-blue-500 to-teal-500 text-white px-6 py-3 rounded-lg shadow-lg hover:shadow-xl hover:bg-teal-700 transform transition-transform duration-300 hover:scale-105"
             >
               Create New Job
             </Button>
@@ -240,41 +240,41 @@ const JobManagement = () => {
             {currentJobs.map((job) => (
               <tr
                 key={job.id}
-                className="border-b border-gray-200  hover:bg-gray-100 transition-colors duration-300"
+                className="border-b border-gray-200 hover:bg-gray-100 transition-colors duration-300"
               >
-                <td className=" flex items-center justify-center">
+                <td className="flex items-center justify-center py-4">
                   <img
                     src={job.hinhAnh}
                     alt={job.tenCongViec}
-                    className="w-16 h-16 mt-6 object-cover rounded-lg shadow-sm"
+                    className="w-16 h-16 object-cover rounded-lg shadow-sm"
                   />
                 </td>
-                <td className="p-4 text-gray-800">{job.tenCongViec}</td>
-                <td className="px-4 pt-6 text-gray-800">
+                <td className="px-4 py-4 text-gray-800">{job.tenCongViec}</td>
+                <td className="px-4 py-4 text-gray-800">
                   ${job.giaTien.toFixed(2)}
                 </td>
-                <td className=" pb-4   flex  items-center space-x-2">
-                  <Button
-                    type="link"
+                <td className="px-4 py-4 flex justify-center items-center space-x-4">
+                  <button
+                    type="button"
                     onClick={() => handleViewClick(job.id)}
-                    className="text-blue-500  hover:text-blue-700"
+                    className="text-blue-500 hover:text-blue-700 focus:outline-none"
                   >
                     View
-                  </Button>
-                  <Button
-                    type="link"
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => handleEditClick(job.id)}
-                    className="text-yellow-500 hover:text-yellow-700"
+                    className="text-yellow-500 hover:text-yellow-700 focus:outline-none"
                   >
                     Edit
-                  </Button>
-                  <Button
-                    type="link"
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => handleDeleteClick(job.id)}
-                    className="text-red-500 hover:text-red-700"
+                    className="text-red-500 hover:text-red-700 focus:outline-none"
                   >
                     Delete
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -291,6 +291,7 @@ const JobManagement = () => {
 
       {/* Edit Modal */}
       <Modal
+        centered
         title="Edit Job"
         visible={isEditModalVisible}
         onOk={handleModalOk}
@@ -298,82 +299,93 @@ const JobManagement = () => {
         okText="Save"
         cancelText="Cancel"
         className="modal-custom"
+        width={600} // Kích thước modal nhỏ gọn hơn
       >
-        <Form layout="vertical">
-          <Form.Item label="Job Name">
-            <Input
-              name="tenCongViec"
-              value={selectedJob?.tenCongViec}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Job Type">
-            <Select
-              name="maChiTietLoaiCongViec"
-              value={selectedJob?.maChiTietLoaiCongViec}
-              onChange={(value) =>
-                setNewJob({ ...newJob, maChiTietLoaiCongViec: value })
-              }
-            >
-              {(() => {
-                const addedIds = new Set(); // Tập hợp để theo dõi các id đã thêm
-                return jobType.flatMap((type) =>
-                  type.dsChiTietLoai
-                    .filter((chiTiet) => {
-                      if (addedIds.has(chiTiet.id)) return false; // Nếu đã thêm, bỏ qua
-                      addedIds.add(chiTiet.id); // Thêm id vào tập hợp
-                      return true;
-                    })
-                    .map((chiTiet) => (
-                      <Select.Option key={chiTiet.id} value={chiTiet.id}>
-                        {chiTiet.tenChiTiet}
-                      </Select.Option>
-                    ))
-                );
-              })()}
-            </Select>
-          </Form.Item>
+        <div className="p-4 bg-white rounded-lg shadow-md">
+          <Form layout="vertical">
+            <Form.Item label="Job Name">
+              <Input
+                name="tenCongViec"
+                value={selectedJob?.tenCongViec}
+                onChange={handleInputChange}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+            <Form.Item label="Job Type">
+              <Select
+                name="maChiTietLoaiCongViec"
+                value={selectedJob?.maChiTietLoaiCongViec}
+                onChange={(value) =>
+                  setNewJob({ ...newJob, maChiTietLoaiCongViec: value })
+                }
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              >
+                {(() => {
+                  const addedIds = new Set(); // Tập hợp để theo dõi các id đã thêm
+                  return jobType.flatMap((type) =>
+                    type.dsChiTietLoai
+                      .filter((chiTiet) => {
+                        if (addedIds.has(chiTiet.id)) return false; // Nếu đã thêm, bỏ qua
+                        addedIds.add(chiTiet.id); // Thêm id vào tập hợp
+                        return true;
+                      })
+                      .map((chiTiet) => (
+                        <Select.Option key={chiTiet.id} value={chiTiet.id}>
+                          {chiTiet.tenChiTiet}
+                        </Select.Option>
+                      ))
+                  );
+                })()}
+              </Select>
+            </Form.Item>
 
-          <Form.Item label="Description">
-            <Input.TextArea
-              name="moTa"
-              value={selectedJob?.moTa}
-              onChange={handleInputChange}
-              rows={4}
-            />
-          </Form.Item>
-          <Form.Item label="Image URL">
-            <Input
-              name="hinhAnh"
-              value={selectedJob?.hinhAnh}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Short Description">
-            <Input
-              name="moTaNgan"
-              value={selectedJob?.moTaNgan}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Rating">
-            <Input
-              name="saoCongViec"
-              type="number"
-              value={selectedJob?.saoCongViec}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-          <Form.Item label="Price">
-            <Input
-              name="giaTien"
-              type="number"
-              value={selectedJob?.giaTien}
-              onChange={handleInputChange}
-            />
-          </Form.Item>
-        </Form>
+            <Form.Item label="Description">
+              <Input.TextArea
+                name="moTa"
+                value={selectedJob?.moTa}
+                onChange={handleInputChange}
+                rows={3}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+            <Form.Item label="Image URL">
+              <Input
+                name="hinhAnh"
+                value={selectedJob?.hinhAnh}
+                onChange={handleInputChange}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+            <Form.Item label="Short Description">
+              <Input
+                name="moTaNgan"
+                value={selectedJob?.moTaNgan}
+                onChange={handleInputChange}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+            <Form.Item label="Rating">
+              <Input
+                name="saoCongViec"
+                type="number"
+                value={selectedJob?.saoCongViec}
+                onChange={handleInputChange}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+            <Form.Item label="Price">
+              <Input
+                name="giaTien"
+                type="number"
+                value={selectedJob?.giaTien}
+                onChange={handleInputChange}
+                className="border-gray-300 rounded-sm shadow-sm text-sm"
+              />
+            </Form.Item>
+          </Form>
+        </div>
       </Modal>
+
       {/* Create Modal */}
       <Modal
         title="Create New Job"

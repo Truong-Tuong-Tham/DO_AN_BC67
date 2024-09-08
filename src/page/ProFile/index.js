@@ -10,6 +10,7 @@ import ActivityLog from "./component/Activity";
 import Statistics from "./component/Statistics";
 import Conected from "./component/Conected";
 import ProfileX from "./component/ProFileXUser";
+import FooterProFile from "./component/footerProFile";
 
 const ProFilePage = () => {
   const navigate = useNavigate();
@@ -30,20 +31,18 @@ const ProFilePage = () => {
 
   return (
     <div>
-      <div>
-        <HeaderDetail />
-        <ListTypeJobsDetail />
-      </div>
+      <HeaderDetail />
+      <ListTypeJobsDetail />
 
-      <div className="flex w-[95%] mx-auto p-4 border-r border-gray-200">
+      <div className="flex flex-col lg:flex-row w-full mx-auto p-4 border-r border-gray-200">
         {infoUser.user.id == iduser ? (
           <>
-            {/* ProfileDetail takes up half the width and sticks to the top */}
-            <div className="w-2/5 pr-4 sticky h-full top-0">
+            {/* ProfileDetail takes up full width on small screens and half width on large screens */}
+            <div className="w-full lg:w-2/5 lg:pr-4  mb-4 lg:mb-0">
               <ProfileDetail iduser={iduser} />
             </div>
-            {/* Combined block of components takes up the other half */}
-            <div className="w-3/5 space-y-4">
+            {/* Combined block of components takes up full width on small screens and half width on large screens */}
+            <div className="w-full lg:w-3/5 space-y-4">
               <ListHireJobs />
               <ActivityLog />
               <Statistics />
@@ -51,9 +50,10 @@ const ProFilePage = () => {
             </div>
           </>
         ) : (
-          // ProfileX takes up the full width
-          <div className="w-[95%] mx-auto p-4 border-r border-gray-200">
+          // ProfileX takes up full width
+          <div className="w-full mx-auto p-4 border-r border-gray-200">
             <ProfileX iduser={iduser} />
+            <FooterProFile iduser={iduser} />
           </div>
         )}
       </div>
