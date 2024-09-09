@@ -1,5 +1,7 @@
 import axios from "axios";
 import { userLocal } from "./localService";
+import { store } from "../redux/store";
+import { turnOffLoading, turnOnLoading } from "../redux/loading/loadingSlice";
 
 const headersCustom = {
   tokenCybersoft:
@@ -13,3 +15,40 @@ export const https = axios.create({
 });
 
 
+// Add a request interceptor
+https.interceptors.request.use(
+  function (config) {
+    // Do something before request is sent
+    console.log('chạy trước khi gửi request đi (pending)');
+    store.dispatch(turnOnLoading());
+    return config;
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error);
+  },
+);
+
+// Add a response interceptor
+https.interceptors.response.use(
+  function (response) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with response data
+    setTimeout(() => {
+      store.dispatch(turnOffLoading());
+    }, 1000);
+    console.log('chạy khi response trả về thành công (response)');
+
+    return response;
+  },
+  function (error) {
+    // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // Do something with response error
+    setTimeout(() => {
+      store.dispatch(turnOffLoading());
+    }, 1000);
+    console.log('chạy khi response trả về thất bại (rejects)');
+
+    return Promise.reject(error);
+  },
+);
