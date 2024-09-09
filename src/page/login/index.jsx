@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { postLoginAction } from "../../redux/user/userSlice";
+
 import { message } from "antd";
 import { userService } from "../../services/userService";
 import { NavLink } from "react-router-dom";
+import { postLoginAction } from "../../redux/userANDjob/userSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postMenujobsAction } from "../../../../redux/user/jobSlice";
-import { jobService } from "../../../../services/jobService";
+import { postMenujobsAction } from "../../../../redux/userANDjob/jobSlice";
+
 import { Dropdown, Menu, Spin } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { jobService } from "../../../../services/jobService";
 
 const ListTypeJobsDetail = () => {
   const { idjob } = useParams();

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { jobService } from "../../../../services/jobService";
+
 import CardJobs from "./component/card";
 import { useDispatch } from "react-redux";
-import { postListJobs } from "../../../../redux/user/jobSlice";
+import { postListJobs } from "../../../../redux/userANDjob/jobSlice";
+import { jobService } from "../../../../services/jobService";
 
 const ListCardJobs = () => {
   const { idtype } = useParams();

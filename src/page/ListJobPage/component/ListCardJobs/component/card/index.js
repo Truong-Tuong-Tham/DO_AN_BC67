@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jobService } from "../../../../../../services/jobService";
 
+
+
 const CardJobs = ({ id, idtype }) => {
   const [jobs, setJobs] = useState(null);
   const navigate = useNavigate();

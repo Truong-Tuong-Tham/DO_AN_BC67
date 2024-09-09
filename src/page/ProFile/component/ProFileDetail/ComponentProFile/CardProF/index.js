@@ -13,7 +13,8 @@ import { userService } from "../../../../../../services/userService";
 import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import { UploadOutlined } from "@ant-design/icons";
-import { putInfoUserAction } from "../../../../../../redux/user/userSlice";
+import { putInfoUserAction } from "../../../../../../redux/userANDjob/userSlice";
+
 
 const { Option } = Select;
 

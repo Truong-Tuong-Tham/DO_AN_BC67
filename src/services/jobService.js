@@ -121,4 +121,8 @@ deleteDetailType: (id) => {
     let uri = `/api/chi-tiet-loai-cong-viec/sua-nhom-chi-tiet-loai/${id}`;
     return https.put(uri, value);
   },
+  deleteTypeJob: (id) => {
+    let uri = `/api/loai-cong-viec/${id}`;
+    return https.delete(uri);
+  },
 };

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { jobService } from "../../services/jobService";
-import { postListTypeJobsDetailAction } from "../../redux/user/jobSlice";
+
+import { postListTypeJobsDetailAction } from "../../redux/userANDjob/jobSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -9,6 +9,7 @@ import ListJobs from "./Component/ListJobs";
 import FooterDetailJob from "./Component/FooterDetailJob";
 import FAQDetailJob from "./Component/FAQ";
 import GuideArticles from "./Component/GuideArticles";
+import { jobService } from "../../services/jobService";
 
 const DetailJob = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,10 @@ const DetailJob = () => {
   return (
     <div className="w-full max-w-[80%] mx-auto overflow-hidden">
       <BannerDetailJobs />
-      <ListJobs/>
-       <GuideArticles/>
-      <FAQDetailJob/>
-      <FooterDetailJob/>
+      <ListJobs />
+      <GuideArticles />
+      <FAQDetailJob />
+      <FooterDetailJob />
     </div>
   );
 };

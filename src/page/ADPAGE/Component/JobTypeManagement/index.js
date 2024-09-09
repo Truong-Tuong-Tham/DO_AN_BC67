@@ -205,7 +205,25 @@ const JobTypeManagement = () => {
       },
     });
   };
-
+  const confirmDeleteCategory = (categoryId) => {
+    Modal.confirm({
+      title: "Confirm Deletion",
+      content: "Are you sure you want to delete this job category?",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: async () => {
+        try {
+          await jobService.deleteTypeJob(categoryId);
+          const response = await jobService.getTypeJob();
+          setJobCategories(response.data?.content || []);
+        } catch (error) {
+          console.error("Error deleting category:", error);
+        }
+      },
+    });
+  };
+  
+  
   const handleModalCancel = () => {
     setIsEditModalVisible(false);
     setIsCategoryModalVisible(false);
@@ -238,7 +256,7 @@ const JobTypeManagement = () => {
         <h1 className="text-teal-600 text-3xl text-center mb-6">
           Job Type Details
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-6">
           {currentDetailTypes.map((type) => (
             <Card
               key={type.id}
@@ -305,44 +323,53 @@ const JobTypeManagement = () => {
         />
       </div>
 
-      {/* Job Categories Section */}
       <div>
-        <h2 className="text-teal-600 text-3xl text-center mb-6">
-          Job Categories
-        </h2>
-        <div className="flex flex-col min-h-screen p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {currentJobCategories.map((category) => (
-              <div
-                key={category.id}
-                className="relative flex items-center justify-center bg-cover bg-center text-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105"
-                style={{
-                  aspectRatio: "1 / 1",
-                  backgroundImage: `url('https://images.pexels.com/photos/305821/pexels-photo-305821.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')`,
-                }}
-              >
-                <div className="text-center">
-                  <Title level={4}>{category.tenLoaiCongViec}</Title>
-                </div>
-              </div>
-            ))}
-            <div
-              className="relative flex items-center justify-center bg-gray-200 shadow-lg rounded-lg cursor-pointer transform transition-transform hover:scale-105"
-              style={{ aspectRatio: "1 / 1" }}
-              onClick={handleAddCategoryClick}
-            >
-              <span className="text-4xl text-gray-600 font-semibold">+</span>
-            </div>
+  <h2 className="text-teal-600 text-3xl text-center mb-6">
+    Job Categories
+  </h2>
+  <div className="flex flex-col min-h-screen p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-5 xl:grid-cols-3 gap-6">
+      {currentJobCategories.map((category) => (
+        <div
+          key={category.id}
+          className="relative flex flex-col items-center justify-center bg-cover bg-center text-white shadow-lg rounded-lg overflow-hidden transform transition-transform hover:scale-105"
+          style={{
+            aspectRatio: "1 / 1",
+            backgroundImage: `url('https://images.pexels.com/photos/305821/pexels-photo-305821.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260')`,
+          }}
+        >
+          <div className="text-center">
+            <Title level={4}>{category.tenLoaiCongViec}</Title>
           </div>
-          <Pagination
-            current={currentCategoryPage}
-            pageSize={categoryPageSize}
-            total={jobCategories.length}
-            onChange={handleCategoryPageChange}
-            className="mt-6"
-          />
+          {/* Delete Button */}
+          <button
+            onClick={() => confirmDeleteCategory(category.id)}
+            className="absolute top-2 right-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+          >
+            <DeleteOutlined />
+          </button>
         </div>
+      ))}
+      <div
+        className="relative flex items-center justify-center bg-gray-200 shadow-lg rounded-lg cursor-pointer transform transition-transform hover:scale-105"
+        style={{ aspectRatio: "1 / 1" }}
+        onClick={handleAddCategoryClick}
+      >
+        <span className="text-4xl text-gray-600 font-semibold">+</span>
       </div>
+    </div>
+    <Pagination
+      current={currentCategoryPage}
+      pageSize={categoryPageSize}
+      total={jobCategories.length}
+      onChange={handleCategoryPageChange}
+      className="mt-6"
+    />
+  </div>
+</div>
+
+
+
 
       {/* Add Job Category Modal */}
       <Modal

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { jobLocal, userLocal } from '../../services/localService';
+import { jobLocal } from '../../services/localService';
 
 const initialState = {
   DetailJobs: [],

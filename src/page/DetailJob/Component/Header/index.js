@@ -3,8 +3,8 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Dropdown, Menu, Avatar } from "antd";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
-import { postLogOutAction } from "../../../../redux/user/userSlice";
-import "../../../../page/Component/HeaderPage/Header.css";
+import { postLogOutAction } from "../../../../redux/userANDjob/userSlice";
+
 
 const HeaderDetail = () => {
   const dispatch = useDispatch();

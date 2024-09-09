@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Input, Select, Form, DatePicker, Row, Col, Button } from "antd";
 import moment from "moment";
-import { userService } from "../../../../../../services/userService";
+
 import { useDispatch, useSelector } from "react-redux";
-import { putInfoUserAction } from "../../../../../../redux/user/userSlice";
+
+import { userService } from "../../../../../../services/userService";
+import { putInfoUserAction } from "../../../../../../redux/userANDjob/userSlice";
 
 const { Option } = Select;
 

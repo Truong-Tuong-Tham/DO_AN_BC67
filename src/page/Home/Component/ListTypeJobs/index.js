@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Card from "./component/Card";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { postListTypeJobsAction } from "../../../../redux/user/jobSlice";
-import { jobService } from "../../../../services/jobService";
+
 import { Carousel } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import { jobService } from "../../../../services/jobService";
+import { postListTypeJobsAction } from "../../../../redux/userANDjob/jobSlice";
 
 // Custom Arrow Components
 const CustomLeftArrow = ({ ...props }) => (
