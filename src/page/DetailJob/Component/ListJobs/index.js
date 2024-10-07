@@ -22,9 +22,10 @@ const ListJobs = () => {
     if (!items || !items.dsNhomChiTietLoai) return null;
 
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items.dsNhomChiTietLoai.map((group) => (
           <div
+            
             key={group.id}
             className="bg-white rounded-lg shadow-md p-4 flex flex-col items-center space-y-4"
           >
@@ -38,7 +39,7 @@ const ListJobs = () => {
             <h2 className="text-lg text-green-700 font-semibold text-center">
               {group.tenNhom}
             </h2>
-            <ul className="list-disc pl-5 space-y-1">
+            <ul className=" pl-5 space-y-1">
               {group.dsChiTietLoai.map((detail) => (
                 <li
                   onClick={() =>

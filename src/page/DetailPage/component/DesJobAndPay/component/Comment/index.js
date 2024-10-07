@@ -78,7 +78,8 @@ const Comment = ({ idtype }) => {
   const renderComments = () => {
     if (loading) return <p className="text-gray-500">Loading comments...</p>;
 
-    if (comments.length === 0) return <p className="text-gray-500">No comments available</p>;
+    if (comments.length === 0)
+      return <p className="text-gray-500">No comments available</p>;
 
     return comments.map((item) => (
       <div
@@ -93,7 +94,9 @@ const Comment = ({ idtype }) => {
           />
           <div className="flex-1">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-lg font-medium text-gray-700">{item.tenNguoiBinhLuan}</span>
+              <span className="text-lg font-medium text-gray-700">
+                {item.tenNguoiBinhLuan}
+              </span>
               <span className="text-sm text-gray-500">
                 {new Date(item.ngayBinhLuan).toLocaleDateString()}
               </span>
@@ -103,8 +106,10 @@ const Comment = ({ idtype }) => {
               {"⭐".repeat(item.saoBinhLuan)}
             </div>
             <div className="mt-2 flex items-center space-x-2">
-              <button className="text-blue-500 text-xs">Like {item.likes || 0}</button>
-              {item.tenNguoiBinhLuan === infoUser.user.name ? (
+              <button className="text-blue-500 text-xs">
+                Like {item.likes || 0}
+              </button>
+              {infoUser && infoUser.user && item.tenNguoiBinhLuan === infoUser.user.name ? (
                 <button
                   onClick={() => handleEdit(item.id)}
                   className="text-green-500 text-xs"

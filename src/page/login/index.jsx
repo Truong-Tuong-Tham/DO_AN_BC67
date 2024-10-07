@@ -30,6 +30,7 @@ const LoginPage = () => {
         .then((res) => {
           navigate("/");
           message.success("Đăng nhập thành công");
+          console.log(res.data.content);
           dispatch(postLoginAction(res.data.content));
         })
         .catch((err) => {

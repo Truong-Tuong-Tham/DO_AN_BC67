@@ -73,7 +73,10 @@ const ListTypeJobsDetail = () => {
             overlay={renderMenu(item.dsNhomChiTietLoai, item.id)}
             placement="bottomCenter"
           >
-            <div className="text-center cursor-pointer">
+            <div
+              onClick={() => navigate(`/detail/jobs/${item.id}`)}
+              className="text-center cursor-pointer"
+            >
               <div className="relative flex items-center">
                 <div className="flex-grow border-t border-gray-200" />
                 <span className="relative group hover:text-green-700">

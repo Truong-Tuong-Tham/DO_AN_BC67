@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { postListTypeJobsDetailAction } from "../../redux/userANDjob/jobSlice";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import BannerDetailJobs from "./Component/Banner";
 import ListJobs from "./Component/ListJobs";
@@ -13,7 +13,6 @@ import { jobService } from "../../services/jobService";
 
 const DetailJob = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const fetchListTypeJobsDetail = async () => {
     try {
