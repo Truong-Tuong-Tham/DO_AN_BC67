@@ -40,7 +40,7 @@ const Card = ({ title, description, onClick }) => {
           <p className="text-gray-700 text-sm mb-4">{description}</p>
           <a
             href="#"
-            className="inline-block text-sm font-medium text-blue-600 hover:text-blue-800"
+            className="inline-block text-sm font-medium text-green-800 hover:text-green-700"
           >
             Read more
           </a>

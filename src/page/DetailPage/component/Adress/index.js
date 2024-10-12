@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { FaHome } from "react-icons/fa"; // Importing Font Awesome home icon
+import { FaHome } from "react-icons/fa";
 
 const Address = () => {
   const { listJobs } = useSelector((state) => state.jobReducer);
-  const { idtype,idjob } = useParams();
+  const { idtype, idjob } = useParams();
 
   // Find the job type by idtype
   const jobType = listJobs.find((job) => job.id === parseInt(idtype, 10));
@@ -21,21 +21,21 @@ const Address = () => {
     },
     {
       name: jobType.tenNhomChiTietLoai,
-      link: `/detail/jobs/${idtype}/listjobs/${idjob }`,
+      link: `/detail/jobs/${idtype}/listjobs/${idjob}`,
     },
     {
       name: jobType.tenChiTietLoai,
-      link:`/detail/jobs/${idtype}/listjobs/${idjob }`,
+      link: `/detail/jobs/${idtype}/listjobs/${idjob}`,
     },
   ];
 
   return (
-    <div className="bottom-4 left-4  p-2 sm:p-3 rounded-md ">
-      <nav className="text-xs sm:text-sm">
-        <ol className="list-none p-0 inline-flex space-x-2 items-center">
+    <div className="p-1 sm:p-3 rounded-md bg-white shadow-sm">
+      <nav className="text-xs sm:text-sm md:text-base">
+        <ol className="list-none p-0 inline-flex space-x-1 sm:space-x-2 items-center">
           <li className="flex items-center">
             <FaHome
-              className="cursor-pointer hover:text-green-500 transition-colors duration-300 text-lg text-gray-600"
+              className="cursor-pointer hover:text-green-500 transition-colors duration-300 text-base sm:text-lg text-gray-600"
               onClick={() => (window.location.href = "/")}
             />
             <span className="mx-1 text-gray-500">/</span>

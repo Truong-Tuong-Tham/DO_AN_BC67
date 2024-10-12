@@ -75,8 +75,7 @@ const DesJobAndPay = () => {
   console.log("jobtype", jobType);
   const { congViec, tenNguoiTao, avatar } = jobType;
   const {
-    saoCongViec,
-    danhGia,
+   
     hinhAnh,
     moTa,
     tenCongViec,
@@ -88,7 +87,7 @@ const DesJobAndPay = () => {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="bg-white w-full md:w-3/5 shadow-lg rounded-lg overflow-hidden flex flex-col">
+      <div className="bg-white w-[90%] md:w-3/5 sm:w-3/4 shadow-lg rounded-lg overflow-hidden flex flex-col">
         {/* Card Content */}
         <div className="p-6 bg-gray-50 rounded-lg shadow-lg">
           <img
@@ -106,7 +105,7 @@ const DesJobAndPay = () => {
               Description
             </h4>
             <p className="text-gray-700">{moTa}</p>
-            <div className="flex flex-col space-y-4  animated fadeIn faster   flex justify-center items-center inset-0 outline-none focus:outline-none ">
+            <div className="flex flex-col space-y-4  animated fadeIn faster  justify-center items-center inset-0 outline-none focus:outline-none ">
 
 </div>
 
@@ -117,67 +116,68 @@ const DesJobAndPay = () => {
 
     {/* Container for both sections */}
 <div className="flex flex-col md:flex-row gap-6 mx-auto p-4 max-w-7xl">
-  {/* Profile Info */}
-  <div className="flex-1 max-w-xs md:max-w-sm mt-10 mb-4">
-    <div className="bg-white p-6 rounded-lg shadow-md relative">
-      {/* Centering the avatar */}
-      <div className="flex justify-center">
-        <div className="relative">
-          <img
-            src={avatar}
-            alt={tenNguoiTao}
-            className="shadow-md rounded-full border-none max-w-[80px] mt-[-3rem]"
-          />
-        </div>
-      </div>
-      <div className="text-center mt-12">
-        <div className="flex justify-center space-x-3">
-          <div className="p-1 text-center">
-            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
-              3,360
-            </span>
-            <span className="text-xs text-slate-400">Jobs</span>
-          </div>
-          <div className="p-1 text-center">
-            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
-              2,454
-            </span>
-            <span className="text-xs text-slate-400">Followers</span>
-          </div>
-          <div className="p-1 text-center">
-            <span className="text-sm font-semibold block uppercase tracking-wide text-slate-700">
-              564
-            </span>
-            <span className="text-xs text-slate-400">Following</span>
-          </div>
-        </div>
-      </div>
-      <div className="text-center mt-6">
-        <h3 className="text-lg text-green-600 cursor-pointer font-bold leading-tight mb-1">
-          {tenNguoiTao}
-        </h3>
-        <div className="text-xs mt-0 mb-1 text-slate-400 font-bold uppercase">
-          <i className="fas fa-map-marker-alt mr-1 text-slate-400 opacity-75"></i>
-          City, VN
-        </div>
-      </div>
-      <div className="mt-6 py-3 border-t border-slate-200 text-center">
-        <p className="font-light leading-relaxed text-slate-600 mb-2 text-sm">
-          A versatile and talented individual with a broad range of skills, this person has made a significant impact in their field. With a dedication to their craft, they continue to inspire and engage through their work, showcasing a unique blend of creativity and expertise.
-        </p>
-        <a
-          href="javascript:;"
-          className="font-normal text-green-600 hover:text-slate-400 text-sm"
-        >
-          Follow Account
-        </a>
+{/* Profile Info */}
+<div className="flex-1 max-w-xs md:max-w-sm mt-6 md:mt-10 mb-4">
+  <div className="bg-white p-4 md:p-6 rounded-lg shadow-md relative">
+    {/* Centering the avatar */}
+    <div className="flex justify-center">
+      <div className="relative">
+        <img
+          src={avatar}
+          alt={tenNguoiTao}
+          className="shadow-md rounded-full border-none max-w-[60px] md:max-w-[80px] mt-[-2.5rem] md:mt-[-3rem]"
+        />
       </div>
     </div>
+    <div className="text-center mt-10 md:mt-12">
+      <div className="flex justify-center space-x-2 md:space-x-3">
+        <div className="p-1 text-center">
+          <span className="text-sm md:text-base font-semibold block uppercase tracking-wide text-slate-700">
+            3,360
+          </span>
+          <span className="text-xs md:text-sm text-slate-400">Jobs</span>
+        </div>
+        <div className="p-1 text-center">
+          <span className="text-sm md:text-base font-semibold block uppercase tracking-wide text-slate-700">
+            2,454
+          </span>
+          <span className="text-xs md:text-sm text-slate-400">Followers</span>
+        </div>
+        <div className="p-1 text-center">
+          <span className="text-sm md:text-base font-semibold block uppercase tracking-wide text-slate-700">
+            564
+          </span>
+          <span className="text-xs md:text-sm text-slate-400">Following</span>
+        </div>
+      </div>
+    </div>
+    <div className="text-center mt-4 md:mt-6">
+      <h3 className="text-md md:text-lg text-green-600 cursor-pointer font-bold leading-tight mb-1">
+        {tenNguoiTao}
+      </h3>
+      <div className="text-xs md:text-sm mt-0 mb-1 text-slate-400 font-bold uppercase">
+        <i className="fas fa-map-marker-alt mr-1 text-slate-400 opacity-75"></i>
+        City, VN
+      </div>
+    </div>
+    <div className="mt-4 md:mt-6 py-3 border-t border-slate-200 text-center">
+      <p className="font-light leading-relaxed text-slate-600 mb-2 text-xs md:text-sm">
+        A versatile and talented individual with a broad range of skills, this person has made a significant impact in their field. With a dedication to their craft, they continue to inspire and engage through their work, showcasing a unique blend of creativity and expertise.
+      </p>
+      <a
+        href="javascript:;"
+        className="font-normal text-green-600 hover:text-slate-400 text-xs md:text-sm"
+      >
+        Follow Account
+      </a>
+    </div>
   </div>
+</div>
 
-  {/* FAQ Section */}
-  <div className="flex-1 container mx-auto p-6 max-w-2xl">
-  <h1 className="text-3xl text-green-600 font-bold mb-6 border-b-2 border-green-200 pb-2">
+
+{/* FAQ Section */}
+<div className="container mx-auto p-4 sm:p-6 max-w-xl lg:max-w-2xl">
+  <h1 className="text-2xl sm:text-3xl text-green-600 font-bold mb-4 sm:mb-6 border-b-2 border-green-200 pb-2">
     Frequently Asked Questions (FAQ)
   </h1>
   <Collapse defaultActiveKey={["1"]} className="space-y-4">
@@ -186,7 +186,7 @@ const DesJobAndPay = () => {
       key="1"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         To apply for a job, click on the job listing and select the "Apply Now" button. You will be prompted to submit your resume and cover letter or fill out the application form provided.
       </p>
     </Panel>
@@ -195,7 +195,7 @@ const DesJobAndPay = () => {
       key="2"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         To create a job listing, log in to your employer account and navigate to the "Post a Job" section. Fill out the required details about the job position and submit the listing for review.
       </p>
     </Panel>
@@ -204,7 +204,7 @@ const DesJobAndPay = () => {
       key="3"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         You can track your job application status by logging into your account and visiting the "My Applications" section. Here, you can see updates on the progress of your applications.
       </p>
     </Panel>
@@ -213,7 +213,7 @@ const DesJobAndPay = () => {
       key="4"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         If you forget your password, click on the "Forgot Password" link on the login page. Follow the instructions to reset your password using the email address associated with your account.
       </p>
     </Panel>
@@ -222,7 +222,7 @@ const DesJobAndPay = () => {
       key="5"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         To update your profile information, log in to your account and go to the "Profile" section. Here, you can edit your personal details, upload new documents, and make other changes as needed.
       </p>
     </Panel>
@@ -231,12 +231,13 @@ const DesJobAndPay = () => {
       key="6"
       className="bg-gray-100 rounded-lg shadow-md"
     >
-      <p className="text-gray-700 text-base p-4">
+      <p className="text-gray-700 text-sm sm:text-base p-3 sm:p-4">
         If you have additional questions or need further assistance, you can contact our support team through the "Contact Us" page or email us at support@example.com. We’re here to help!
       </p>
     </Panel>
   </Collapse>
 </div>
+
 
 
 </div>
@@ -245,7 +246,7 @@ const DesJobAndPay = () => {
         <Comment idtype={idtype} />
       </div>
 
-      <div className="w-full md:w-2/5 p-6 bg-gray-50 rounded-lg shadow-md">
+      <div className="w-full md:w-3/5 sm:w-1/2 p-6 bg-gray-50 rounded-lg shadow-md">
         <div className="flex justify-center sticky z-10 top-0 items-center min-h-screen bg-cover bg-center bg-[url('https://images.pexels.com/photos/2215534/pexels-photo-2215534.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]">
           <div className="max-w-lg mx-auto p-6">
             <div className="relative flex flex-col bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white rounded-xl shadow-lg p-8">

@@ -5,7 +5,7 @@ import { turnOffLoading, turnOnLoading } from "../redux/loading/loadingSlice";
 
 const headersCustom = {
   tokenCybersoft:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA2NyIsIkhldEhhblN0cmluZyI6IjE1LzEyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTczNDIyMDgwMDAwMCIsIm5iZiI6MTcwNTU5NzIwMCwiZXhwIjoxNzM0MzY4NDAwfQ.6KzwosGeCdFyoJDkANd3FzSA5C_iSLO1L8Q903zqZ44",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA2NyIsIkhldEhhblN0cmluZyI6IjI3LzEyLzIwMjQiLCJIZXRIYW5UaW1lIjoiMTczNTI1NzYwMDAwMCIsIm5iZiI6MTcwNTU5NzIwMCwiZXhwIjoxNzM1NDA1MjAwfQ.QgJv8DfQ6VrgNKpb6y5aTzwXLElPfrxzaooDqmw06CY",
   token: userLocal.get()?.token,
 };
 
@@ -14,19 +14,18 @@ export const https = axios.create({
   baseURL: "https://fiverrnew.cybersoft.edu.vn",
 });
 
-
 // Add a request interceptor
 https.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    console.log('chạy trước khi gửi request đi (pending)');
+
     store.dispatch(turnOnLoading());
     return config;
   },
   function (error) {
     // Do something with request error
     return Promise.reject(error);
-  },
+  }
 );
 
 // Add a response interceptor
@@ -36,8 +35,7 @@ https.interceptors.response.use(
     // Do something with response data
     setTimeout(() => {
       store.dispatch(turnOffLoading());
-    }, 1000);
-    console.log('chạy khi response trả về thành công (response)');
+    }, 300);
 
     return response;
   },
@@ -46,9 +44,8 @@ https.interceptors.response.use(
     // Do something with response error
     setTimeout(() => {
       store.dispatch(turnOffLoading());
-    }, 1000);
-    console.log('chạy khi response trả về thất bại (rejects)');
+    }, 300);
 
     return Promise.reject(error);
-  },
+  }
 );

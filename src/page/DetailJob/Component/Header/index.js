@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Dropdown, Menu, Avatar } from "antd";
-import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { postLogOutAction } from "../../../../redux/userANDjob/userSlice";
-
 
 const HeaderDetail = () => {
   const dispatch = useDispatch();
@@ -12,8 +11,10 @@ const HeaderDetail = () => {
   const { idjob } = useParams();
   const { listTypeJobsDetail } = useSelector((state) => state.jobReducer);
   const { infoUser } = useSelector((state) => state.userReducer);
-  console.log("infoUserHD", infoUser);
   const [inputValue, setInputValue] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const inputRef = useRef(null);
 
   const idjobNumber = Number(idjob);
   const findName = listTypeJobsDetail.find((job) => job.id === idjobNumber);
@@ -25,7 +26,19 @@ const HeaderDetail = () => {
   }, [findName]);
 
   const handleInputChange = (event) => {
-    setInputValue(event.target.value);
+    const value = event.target.value;
+    setInputValue(value);
+
+    // Filter suggestions based on input value
+    if (value) {
+      const filteredSuggestions = listTypeJobsDetail.filter((job) =>
+        job.tenLoaiCongViec.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filteredSuggestions);
+      setShowSuggestions(true); // Show suggestions when there is input
+    } else {
+      setShowSuggestions(false); // Hide suggestions when input is empty
+    }
   };
 
   const handleSearch = () => {
@@ -39,6 +52,25 @@ const HeaderDetail = () => {
     }
   };
 
+  const handleSuggestionClick = (suggestion) => {
+    setInputValue(suggestion.tenLoaiCongViec);
+    setShowSuggestions(false); // Hide suggestions after clicking
+    navigate(`/detail/jobs/${suggestion.id}`); // Navigate to the job detail
+  };
+
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      setShowSuggestions(false); // Hide suggestions when clicking outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const userMenu = (
     <Menu className="p-4 bg-white shadow-lg rounded-lg">
       <Menu.Item key="1">
@@ -50,20 +82,21 @@ const HeaderDetail = () => {
       <Menu.Divider />
       <Menu.Item>
         <NavLink
-          to={`/profile/${infoUser?.user?.id}`}
-          className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
-        >
-          Profile
-        </NavLink>
-      </Menu.Item>
-      <Menu.Item>
-        <NavLink
           to={`/`}
           className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
         >
           Home
         </NavLink>
       </Menu.Item>
+      <Menu.Item>
+        <NavLink
+          to={`/profile/${infoUser?.user?.id}`}
+          className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg"
+        >
+          Profile
+        </NavLink>
+      </Menu.Item>
+   
 
       {infoUser?.user?.role === "ADMIN" && (
         <Menu.Item>
@@ -78,7 +111,7 @@ const HeaderDetail = () => {
 
       <Menu.Item key="2" onClick={() => dispatch(postLogOutAction())}>
         <div className="flex items-center space-x-2 px-4 py-2 rounded-md hover:bg-gray-100 cursor-pointer">
-          <span className="block p-2 text-gray-800 hover:bg-gray-100 rounded-lg">
+          <span className="block p-2 text-red-500 hover:bg-gray-100 rounded-lg">
             Log Out
           </span>
         </div>
@@ -86,140 +119,25 @@ const HeaderDetail = () => {
     </Menu>
   );
 
-  const fiverrProMenu = (
-    <Menu className="p-4 bg-white shadow-lg rounded-lg">
-      <Menu.Item>
-        <a
-          href="https://pro.fiverr.com?source=header_pop_up"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">I'm looking to hire</div>
-          <div className="text-sm text-gray-600">
-            My team needs vetted freelance talent and a premium business
-            solution.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/cp/pro-freelancers?source=header_pop_up"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">I want to offer Pro services</div>
-          <div className="text-sm text-gray-600">
-            I’d like to work on business projects as a Pro freelancer or agency.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Divider />
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/pro/categories"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Explore Pro Categories</div>
-          <div className="text-sm text-gray-600">
-            Browse the categories of Pro services available.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/pro/success-stories"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Success Stories</div>
-          <div className="text-sm text-gray-600">
-            Read about successful projects on Fiverr Pro.
-          </div>
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const exploreMenu = (
-    <Menu className="p-4 bg-white shadow-lg rounded-lg">
-      <Menu.Item>
-        <a
-          href="https://discover.fiverr.com/?source=explore-tab"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Discover</div>
-          <div className="text-sm text-gray-600">
-            Inspiring projects made on Fiverr.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/guides?source=explore-tab"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Guides</div>
-          <div className="text-sm text-gray-600">
-            Learn how to succeed on Fiverr.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/blog?source=explore-tab"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Blog</div>
-          <div className="text-sm text-gray-600">
-            Read the latest stories and tips from the Fiverr community.
-          </div>
-        </a>
-      </Menu.Item>
-      <Menu.Item>
-        <a
-          href="https://www.fiverr.com/reviews?source=explore-tab"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block p-3 text-gray-800 hover:bg-gray-100 rounded-lg transition duration-300 ease-in-out"
-        >
-          <div className="font-semibold">Reviews</div>
-          <div className="text-sm text-gray-600">
-            See what clients are saying about Fiverr services.
-          </div>
-        </a>
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
     <div className="h-full w-full p-5">
-      <div className="flex justify-between items-center">
-        <div class="font-extrabold tracking-widest  text-xl">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="font-extrabold tracking-widest text-2xl mb-4 md:mb-0">
           <a
             onClick={() => navigate("/")}
-            class="transition duration-500 cursor-pointer  text-3xl hover:text-green-800"
+            className="transition duration-500 cursor-pointer text-green-900 text-3xl hover:text-green-800"
           >
             FIVERR
           </a>
         </div>
-        <div className="flex-1 max-w-[350px] me-[600px] relative">
+        
+        <div className="flex-1 max-w-[350px] mx-auto md:mx-0 relative mb-4 md:mb-0" ref={inputRef}>
           <div className="flex h-[30px]">
-            <div className="relative flex items-center w-full max-w-md mx-auto rounded-lg border border-gray-200 bg-white overflow-hidden">
+            <div className="relative flex items-center w-full max-w-md rounded-lg border border-gray-200 bg-white overflow-hidden">
               <svg
                 viewBox="0 0 20 20"
                 aria-hidden="true"
-                className="absolute left-0 w-8 h-5 text-gray-500 ml-3"
+                className="absolute  left-0 w-8 h-5 text-gray-500 ml-3"
               >
                 <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z"></path>
               </svg>
@@ -228,6 +146,7 @@ const HeaderDetail = () => {
                 className="flex-1 pl-12 pr-16 py-2 border border-gray-200 rounded-lg outline-none"
                 value={inputValue}
                 onChange={handleInputChange}
+                onFocus={() => setShowSuggestions(true)} // Show suggestions on focus
                 placeholder="Search jobs..."
               />
               <button
@@ -238,24 +157,24 @@ const HeaderDetail = () => {
               </button>
             </div>
           </div>
+          {showSuggestions && suggestions.length > 0 && (
+            <ul className="absolute z-20 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+              {suggestions.map((suggestion) => (
+                <li
+                  key={suggestion.id}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion.tenLoaiCongViec}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
           {infoUser ? (
             <>
-              <Dropdown overlay={fiverrProMenu} trigger={["hover"]}>
-                <a className="custom-dropdown flex items-center space-x-2 cursor-pointer">
-                  <span>Fiverr Pro</span>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
-
-              <Dropdown overlay={exploreMenu} trigger={["hover"]}>
-                <a className="custom-dropdown flex items-center space-x-2 cursor-pointer">
-                  <span>Explore</span>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
               <Dropdown overlay={userMenu} trigger={["hover"]}>
                 <Avatar
                   size="large"
@@ -267,26 +186,12 @@ const HeaderDetail = () => {
             </>
           ) : (
             <>
-              <Dropdown overlay={fiverrProMenu} trigger={["hover"]}>
-                <a className="custom-dropdown flex items-center space-x-2 cursor-pointer">
-                  <span>Fiverr Pro</span>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
-
-              <Dropdown overlay={exploreMenu} trigger={["hover"]}>
-                <a className="custom-dropdown flex items-center space-x-2 cursor-pointer">
-                  <span>Explore</span>
-                  <DownOutlined />
-                </a>
-              </Dropdown>
-
               <NavLink to="/auth/login" className="btn text-gray-900">
                 Join
                 <div className="animation"></div>
               </NavLink>
-              <NavLink to="/auth/register" className="custom-navlink">
-                Sign In
+              <NavLink to="/auth/register" className="btn text-gray-900">
+                Register
                 <div className="animation"></div>
               </NavLink>
             </>

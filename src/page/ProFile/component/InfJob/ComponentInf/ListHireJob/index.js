@@ -70,8 +70,9 @@ const ListHireJobs = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      await jobService.deleteHireJob(selectedJob.id);
+      await jobService.deteleHireJob(selectedJob.id);
       setListHire(listHire.filter((job) => job.id !== selectedJob.id));
+      setActiveJob(null);
       handleCloseModal(); // Close modal after deletion
     } catch (error) {
       console.error("Error deleting job:", error);
@@ -93,7 +94,7 @@ const ListHireJobs = () => {
           {/* Carousel Section */}
           <div className="w-1/5 h-[200px]">
             <Carousel
-              dots={false}
+              dots={true}
               autoplay={true}
               slidesToShow={1}
               slidesToScroll={1}
@@ -132,7 +133,7 @@ const ListHireJobs = () => {
                   {activeJob.congViec.tenCongViec}
                 </h3>
                 <p className="text-sm text-gray-700 mb-2 truncate">
-                  <span className="font-bold">Description:</span>{" "}
+                  <span className="font-bold">Description:</span>
                   {activeJob.congViec.moTaNgan}
                 </p>
                 <p className="text-sm text-gray-700 mb-2 flex items-center">
@@ -168,7 +169,7 @@ const ListHireJobs = () => {
                   </span>
                 </p>
                 <button
-                  className="mt-auto w-[100px] bg-white text-teal-500 font-semibold py-1 px-3 border border-2 border-teal-500 rounded hover:bg-teal-500 transition-colors duration-200 text-teal-500 hover:text-white"
+                  className="mt-auto w-[100px] bg-white  font-semibold py-1 px-3  border-2 border-teal-500 rounded hover:bg-teal-500 transition-colors duration-200 text-teal-500 hover:text-white"
                   onClick={() => handleViewClick(activeJob)}
                 >
                   View

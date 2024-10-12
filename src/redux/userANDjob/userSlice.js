@@ -3,7 +3,7 @@ import { userLocal } from "../../services/localService";
 
 
 const initialState = {
-  infoUser: userLocal.get(), // Ensure the key matches the one in localStorage
+  infoUser: userLocal.get(), 
 
 };
 

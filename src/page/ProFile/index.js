@@ -22,6 +22,7 @@ const ProFilePage = () => {
     if (!infoUser || !infoUser.user) {
       navigate("/");
     }
+    console.log("infoUser", infoUser);
   }, [infoUser, navigate]);
 
   if (!infoUser || !infoUser.user) {

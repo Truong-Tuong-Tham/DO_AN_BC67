@@ -9,11 +9,11 @@ const DetailJobPage = () => {
 const {infoUser} = useSelector((state) => state.userReducer);
 const navigate = useNavigate();
 
-useEffect(() => {
-  if (!infoUser) {
-    navigate("/auth/login");
-  }
-},[])
+// useEffect(() => {
+//   if (!infoUser) {
+//     navigate("/auth/login");
+//   }
+// },)
   return (
 
     <div className="w-full ">

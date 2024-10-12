@@ -115,7 +115,10 @@ const HireJobsManager = ({ listJobs, usersList }) => {
   // Pagination for the user table
   const indexOfLastUserItem = currentUserPage * ITEMS_PER_PAGE_TABLE;
   const indexOfFirstUserItem = indexOfLastUserItem - ITEMS_PER_PAGE_TABLE;
-  const currentUserItems = filteredUsers.slice(indexOfFirstUserItem, indexOfLastUserItem);
+  const currentUserItems = filteredUsers.slice(
+    indexOfFirstUserItem,
+    indexOfLastUserItem
+  );
 
   const userTotalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE_TABLE);
 
@@ -173,8 +176,8 @@ const HireJobsManager = ({ listJobs, usersList }) => {
             onClick={() => handlePageChange(startPage + index)}
             className={`px-4 py-2 mx-1 rounded-md text-sm font-medium ${
               currentPage === startPage + index
-                ? "bg-teal-500 text-white"
-                : "bg-gray-300 text-gray-700"
+                ? "bg-teal-500 h-10 w-10 text-white"
+                : "bg-gray-300 h-10 w-10 text-gray-700"
             } hover:bg-teal-700 hover:text-white transition-colors duration-300`}
           >
             {startPage + index}
@@ -256,8 +259,8 @@ const HireJobsManager = ({ listJobs, usersList }) => {
                 onClick={() => handleUserPageChange(page)}
                 className={`px-4 py-2 mx-1 rounded-md text-sm font-medium ${
                   currentUserPage === page
-                    ? "bg-teal-500 text-white"
-                    : "bg-gray-300 text-gray-700"
+                    ? "bg-teal-500 h-10 w-10  text-white"
+                    : "bg-gray-300  h-10 w-10 text-gray-700"
                 } hover:bg-teal-700 hover:text-white transition-colors duration-300`}
               >
                 {page}

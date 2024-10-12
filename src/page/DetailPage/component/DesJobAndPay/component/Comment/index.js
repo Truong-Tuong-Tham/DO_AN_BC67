@@ -49,7 +49,7 @@ const Comment = ({ idtype }) => {
           ...newCommentData,
           id: Date.now(),
           tenNguoiBinhLuan: infoUser.user.name,
-          avatar: infoUser.user.avatar || "https://i.pravatar.cc/300",
+          avatar: infoUser.user.avatar || "https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611731.jpg?w=740&t=st=1725095976~exp=1725096576~hmac=693722cc51a56ac9b361515cbd6053de90fbe5f8c0c21f50653dd6bc67e3c001",
           likes: 0,
         },
       ]);
@@ -88,7 +88,7 @@ const Comment = ({ idtype }) => {
       >
         <div className="flex items-start">
           <Avatar
-            src={item.avatar}
+            src={item.avatar ||"https://img.freepik.com/free-psd/3d-render-avatar-character_23-2150611731.jpg?w=740&t=st=1725095976~exp=1725096576~hmac=693722cc51a56ac9b361515cbd6053de90fbe5f8c0c21f50653dd6bc67e3c001"}
             alt={item.tenNguoiBinhLuan}
             className="w-12 h-12 rounded-full mr-4"
           />

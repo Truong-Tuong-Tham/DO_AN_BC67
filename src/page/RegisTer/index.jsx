@@ -50,9 +50,9 @@ const RegisterPage = () => {
   });
 
   return (
-    <div className="h-screen w-screen flex overflow-hidden font-body">
+    <div className="h-screen w-screen flex flex-col lg:flex-row overflow-hidden font-body">
       {/* Left side with image */}
-      <div className="relative w-1/2 h-full overflow-hidden">
+      <div className="relative w-full lg:w-1/2 h-1/3 lg:h-full overflow-hidden">
         <img
           src="https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
           alt="Register Page"
@@ -61,54 +61,52 @@ const RegisterPage = () => {
       </div>
 
       {/* Right side with registration form */}
-      <div className="flex flex-col justify-center items-center w-1/2 h-full ">
+      <div className="flex flex-col justify-center items-center w-full lg:w-1/2 h-full p-4 sm:p-8 lg:p-12">
         <form
-          className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md mx-4 sm:mx-8 border border-gray-200"
+          className="bg-white shadow-lg rounded-lg p-6 sm:p-8 lg:p-10 w-full max-w-md mx-4 sm:mx-8 border border-gray-200"
           onSubmit={formRegister.handleSubmit}
         >
-    
-          <h2 className="text-3xl font-bold text-center text-green-500 mb-6">
-          Register
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-green-500 mb-6">
+            Register
           </h2>
           {["name", "phone", "email", "password", "confirmPassword", "birthday"].map((field, index) => (
-            <div key={index} className="mb-4">
-              <label
-                className="block text-green-600 text-sm font-medium mb-1"
-                htmlFor={field}
-              >
-                {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, ' $1')}
-              </label>
-              <input
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                type={field === "birthday" ? "date" : field === "email" ? "email" : "text"}
-                name={field}
-                id={field}
-                placeholder={`Nhập ${field}`}
-                onChange={formRegister.handleChange}
-                onBlur={formRegister.handleBlur}
-                value={formRegister.values[field]}
-              />
-              {formRegister.touched[field] && formRegister.errors[field] && (
-                <div className="text-red-500 text-xs mt-1">
-                  {formRegister.errors[field]}
-                </div>
-              )}
-            </div>
-          ))}
-          <div className="flex justify-between items-center space-y-4">
+  <div key={index} className="mb-4">
+    <label
+      className="block text-green-600 text-sm sm:text-base font-medium mb-1"
+      htmlFor={field}
+    >
+      {field.charAt(0).toUpperCase() + field.slice(1).replace(/([A-Z])/g, " $1")}
+    </label>
+    <input
+      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+      type={field === "password" || field === "confirmPassword" ? "password" : field === "birthday" ? "date" : field === "email" ? "email" : "text"}
+      name={field}
+      id={field}
+      placeholder={`Nhập ${field}`}
+      onChange={formRegister.handleChange}
+      onBlur={formRegister.handleBlur}
+      value={formRegister.values[field]}
+    />
+    {formRegister.touched[field] && formRegister.errors[field] && (
+      <div className="text-red-500 text-xs mt-1">
+        {formRegister.errors[field]}
+      </div>
+    )}
+  </div>
+))}
+
+          <div className="flex justify-between items-center mt-4">
             <button
               className="bg-green-700 hover:bg-green-800 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               type="submit"
             >
-             Submit
+              Submit
             </button>
             <NavLink
               to="/auth/login"
-              className="text-green-500  hover:text-green-700 font-medium"
+              className="text-green-500 hover:text-green-700 font-medium"
             >
-             Already have an account?
-
-
+              Already have an account?
             </NavLink>
           </div>
         </form>

@@ -45,8 +45,8 @@ const HeaderPage = () => {
 
       <Menu.Item key="2" onClick={() => dispatch(postLogOutAction())}>
         <div className="flex items-center space-x-2">
-          <LogoutOutlined />
-          <span>Log Out</span>
+          <LogoutOutlined className="text-red-500" />
+          <span className="cursor-pointer text-red-500 text-sm " >Log Out</span>
         </div>
       </Menu.Item>
     </Menu>
@@ -57,7 +57,7 @@ const HeaderPage = () => {
       <div className="flex items-center">
         <NavLink
           to="/"
-          className="text-gray-900 text-3xl font-extrabold flex items-center space-x-3 hover:text-gray-600 transition duration-300 ease-in-out"
+          className="text-green-900 text-3xl font-extrabold flex items-center space-x-3 hover:text-teal-600 transition duration-300 ease-in-out"
         >
           <span>Fiverr</span>
         </NavLink>

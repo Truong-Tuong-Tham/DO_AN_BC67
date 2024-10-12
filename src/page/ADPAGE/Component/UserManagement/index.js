@@ -181,51 +181,76 @@ const UserManagement = () => {
         <img
           src={avatar || defaultAvatarFemale}
           alt="Avatar"
-          className="w-12 h-12 rounded-full object-cover"
+          className="w-10 h-10 rounded-full object-cover sm:w-12 sm:h-12"
         />
       ),
+      width: ['100px', '120px'],
+      responsive: ["md"], // Chỉ hiện Avatar trên màn hình md (768px) trở lên
     },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      width: ['150px', '200px'],
+      // Name sẽ luôn hiển thị trên tất cả các kích thước màn hình
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      width: ['200px', '250px'],
+      responsive: ["md"], // Chỉ hiện Email trên màn hình md (768px) trở lên
     },
-
     {
       title: "Role",
       dataIndex: "role",
       key: "role",
       render: (role) => (
-        <Tag color={role === "ADMIN" ? "blue" : "green"}>{role}</Tag>
+        <Tag color={role === "ADMIN" ? "blue" : "green"} className="text-xs sm:text-sm">
+          {role}
+        </Tag>
       ),
+      width: '100px',
+      responsive: ["md"], // Chỉ hiện Role trên màn hình md (768px) trở lên
     },
     {
       title: "Actions",
       key: "actions",
       render: (_, record) => (
-        <Space size="middle">
-          <Button type="link" onClick={() => handleViewDetails(record.id)}>
+        <Space size="small" className="flex flex-wrap justify-center sm:flex-nowrap">
+          <Button
+            type="link"
+            size="small" // Kích thước nhỏ hơn cho nút trên điện thoại
+            className="text-xs sm:text-sm"
+            onClick={() => handleViewDetails(record.id)}
+          >
             View
           </Button>
           <Button
             type="link"
-            className="text-yellow-500 hover:text-yellow-700"
+            size="small" // Kích thước nhỏ hơn cho nút trên điện thoại
+            className="text-xs sm:text-sm text-yellow-500 hover:text-yellow-700"
             onClick={() => handleEditUser(record.id)}
           >
             Edit
           </Button>
-          <Button type="link" danger onClick={() => handleDelete(record.id)}>
+          <Button
+            type="link"
+            size="small" // Kích thước nhỏ hơn cho nút trên điện thoại
+            danger
+            className="text-xs sm:text-sm"
+            onClick={() => handleDelete(record.id)}
+          >
             Delete
           </Button>
         </Space>
       ),
+      width: ['120px', 'auto'], 
     },
+    
   ];
+  
+  
 
   return (
     <div className="container mx-auto p-6 bg-gray-100 min-h-screen">
@@ -234,9 +259,9 @@ const UserManagement = () => {
         <button
           type="primary"
           onClick={() => setIsAddModalVisible(true)}
-          className="bg-green-800 text-white px-4 py-2 rounded shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-300"
+          className="bg-teal-500 text-white px-4 py-1 rounded shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-300"
         >
-          Add User
+          Add
         </button>
 
         <div className="flex space-x-4 items-center">
@@ -261,13 +286,16 @@ const UserManagement = () => {
         </div>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={currentUsers}
-        pagination={false}
-        rowKey="id"
-        className="shadow-md h-[540px] rounded bg-white"
-      />
+      <div className="overflow-x-auto"> 
+    <Table
+      columns={columns}
+      dataSource={currentUsers}
+      pagination={false}
+      rowKey="id"
+      className="shadow-md rounded bg-white"
+      scroll={{ x: 'max-content' }} 
+    />
+  </div>
 
 <div className="flex justify-center items-center py-4 space-x-4">
   <button
@@ -277,8 +305,8 @@ const UserManagement = () => {
   >
     Previous
   </button>
-  <span className="text-xl font-bold text-gray-900 bg-gray-200 px-4 py-2 rounded-md shadow-sm">
-  Page {currentPage} of {totalPages}
+  <span className="text-base font-bold text-white bg-teal-500 px-4 py-2 rounded-md shadow-sm">
+   {currentPage} / {totalPages}
 </span>
 
   <button

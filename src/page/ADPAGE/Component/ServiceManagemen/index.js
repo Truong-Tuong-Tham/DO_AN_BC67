@@ -18,7 +18,7 @@ const ServiceManagement = () => {
   const [selectedJobCode, setSelectedJobCode] = useState(""); // State for selected job code
   const [filteredComments, setFilteredComments] = useState([]);
   const { iduser } = useParams();
-  const usersList =listUsers;
+  const usersList = listUsers;
   // Fetch data on component mount
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +42,7 @@ const ServiceManagement = () => {
   // Filter comments based on selected job code
   useEffect(() => {
     const filtered = selectedJobCode
-      ? comments.filter((comment) => comment.maCongViec === selectedJobCode)
+      ? comments.filter((comment) => comment.maCongViec == selectedJobCode)
       : comments;
     setFilteredComments(filtered);
   }, [selectedJobCode, comments]);
@@ -104,27 +104,54 @@ const ServiceManagement = () => {
   // Pagination logic
   const indexOfLastComment = currentPage * commentsPerPage;
   const indexOfFirstComment = indexOfLastComment - commentsPerPage;
-  const currentComments = filteredComments.slice(indexOfFirstComment, indexOfLastComment);
+  const currentComments = filteredComments.slice(
+    indexOfFirstComment,
+    indexOfLastComment
+  );
   const totalPages = Math.ceil(filteredComments.length / commentsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  // Logic to determine the range of pages to display
+  const maxVisiblePages = 5;
+  const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
+  const pagesToShow = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
+
+  // Nút Next và Prev
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
   // Get user details for avatar and name
   const getUserDetails = (userId) => {
     const user = listUsers.find((user) => user.id === userId);
     return user
       ? { avatar: user.avatar, name: user.name }
       : {
-          avatar: "https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png",
+          avatar:
+            "https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png",
           name: "Unknown",
         };
   };
 
   return (
     <div className="container mx-auto p-4">
-      <div className="text-2xl text-center text-teal-600 font-bold mb-6">Comments</div>
+      <div className="text-2xl text-center text-teal-600 font-bold mb-6">
+        Comments
+      </div>
       {/* Job Filter Dropdown */}
       <div className="mb-4 w-[340px]">
         <select
@@ -195,20 +222,45 @@ const ServiceManagement = () => {
       </div>
 
       {/* Pagination */}
+
       <div className="flex justify-center mt-4 space-x-2">
-        {Array.from({ length: totalPages }, (_, index) => (
+        <button
+          onClick={handlePrev}
+          disabled={currentPage === 1}
+          className={`${
+            currentPage === 1
+              ? "bg-gray-300 text-gray-800 cursor-not-allowed"
+              : "bg-teal-500 text-white"
+          } px-3 py-1 rounded-lg`}
+        >
+          Prev
+        </button>
+
+        {pagesToShow.map((page) => (
           <button
-            key={index + 1}
-            onClick={() => handlePageChange(index + 1)}
+            key={page}
+            onClick={() => handlePageChange(page)}
             className={`${
-              currentPage === index + 1
-                ? "bg-teal-500 text-white"
-                : "bg-gray-200 text-gray-800"
+              currentPage === page
+                ? "bg-teal-500 h-10 w-10 text-white"
+                : "bg-gray-200 h-10 w-10 text-gray-800"
             } px-3 py-1 rounded-lg`}
           >
-            {index + 1}
+            {page}
           </button>
         ))}
+
+        <button
+          onClick={handleNext}
+          disabled={currentPage === totalPages}
+          className={`${
+            currentPage === totalPages
+              ? "bg-gray-300 text-gray-800 cursor-not-allowed"
+              : "bg-teal-500 text-white"
+          } px-3 py-1 rounded-lg`}
+        >
+          Next
+        </button>
       </div>
 
       {/* Delete Modal */}
@@ -268,7 +320,7 @@ const ServiceManagement = () => {
       )}
 
       {/* Hire Jobs Manager */}
-      <HireJobsManager  listJobs= { listJobs }  usersList={usersList} />
+      <HireJobsManager listJobs={listJobs} usersList={usersList} />
     </div>
   );
 };

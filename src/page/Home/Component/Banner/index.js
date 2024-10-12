@@ -69,7 +69,10 @@ const Banner = () => {
         <h1 className="text-4xl text-white font-bold mb-5 text-center">
           Find Your Perfect Job
         </h1>
-        <div className="relative w-full max-w-md flex bg-white rounded-lg shadow-md h-14 sm:h-12" ref={inputRef}>
+        <div
+          className="relative w-full max-w-md flex bg-white rounded-lg shadow-md h-14 sm:h-12"
+          ref={inputRef}
+        >
           <div className="flex items-center justify-center w-12 sm:w-10 rounded-tl-lg rounded-bl-lg border-r border-gray-200 bg-white">
             <svg
               viewBox="0 0 20 20"
@@ -81,24 +84,24 @@ const Banner = () => {
           </div>
           <input
             type="text"
-            className="bg-white pl-4 text-lg font-semibold outline-0 flex-1"
+            className="bg-white pl-4 text-lg text-gray-700 w-[200px] font-semibold outline-0 rounded-lg flex-1"
             placeholder="Search..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onFocus={() => setIsDropdownOpen(suggestions.length > 0)}
           />
-          <input
-            type="button"
-            value="Search"
-            className="bg-green-600 text-white font-semibold hover:bg-green-800 transition-colors text-lg rounded-tr-lg rounded-br-lg flex items-center justify-center px-4 sm:px-2 sm:text-sm"
-            onClick={() => handleSearch()} // No ID to pass here
-          />
+
           {/* Suggestions Dropdown */}
           {isDropdownOpen && suggestions.length > 0 && (
             <ul
               ref={dropdownRef}
               className="absolute z-10 mt-1 w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-lg"
-              style={{ top: '100%', left: 0 }}
+              style={{
+                top: "100%",
+                left: 0,
+                height: "110px",
+                overflowY: "scroll",
+              }}
             >
               {suggestions.map((suggestion) => (
                 <li

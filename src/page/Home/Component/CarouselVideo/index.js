@@ -53,6 +53,7 @@ const TestimonialCarousel = () => {
   return (
     <div className="relative font-inter  antialiased">
       <main className="relative min-h-screen flex flex-col justify-center bg-slate-50 overflow-hidden">
+        <h1 className="text-3xl md:text-5xl font-bold text-center">What they're saying about Fiverr</h1>
         <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="flex flex-col md:flex-row items-stretch">
             {/* Carousel Body */}
@@ -67,7 +68,7 @@ const TestimonialCarousel = () => {
                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
                   <button
                     onClick={() => setModalOpen(true)}
-                    className="text-white text-3xl md:text-4xl bg-green-950 p-4 rounded-full shadow-lg"
+                    className="text-white text-2xl md:text-3xl bg-green-950 p-4 rounded-full shadow-lg"
                     aria-label="Play video"
                   >
                     <svg
@@ -82,7 +83,7 @@ const TestimonialCarousel = () => {
               </div>
               <div className="flex flex-col justify-between p-6 md:w-3/5 h-full">
                 <div>
-                  <h2 className="text-4xl text-white font-semibold mb-4">
+                  <h2 className="text-2xl text-white font-semibold mb-4">
                     {videoData[currentIndex].title}
                   </h2>
                   <p className="text-white">{videoData[currentIndex].quote}</p>
@@ -99,7 +100,7 @@ const TestimonialCarousel = () => {
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-full shadow-md transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                   >
                     Next
-                  </button> 
+                  </button>
                 </div>
               </div>
             </div>
